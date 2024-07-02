@@ -1,0 +1,4 @@
+# .husky/pre-commit
+echo "Husky pre-commit hook is running..."
+cd class-components
+npx lint-staged
