@@ -1,5 +1,6 @@
 import React from 'react';
 import { Character } from '../../types/Character.ts';
+import CharacterCard from '../CharacterCard/CharacterCard.tsx';
 
 interface ResultsProps {
     results: Character[];
@@ -12,8 +13,8 @@ class ResultBar extends React.Component<ResultsProps> {
             <div>
                 {results.length > 0 ? (
                     results.map((result) => (
-                        <div key={result.id} style={{ marginBottom: '10px' }}>
-                            <h3>{result.name}</h3>
+                        <div key={result.id} style={{ margin: '20px' }}>
+                            <CharacterCard result={result}></CharacterCard>
                         </div>
                     ))
                 ) : (
