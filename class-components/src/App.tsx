@@ -1,9 +1,15 @@
 import { Component } from 'react';
 import './App.css';
 import ResultBar from './components/ResultBar/ResultBar.tsx';
+import axios from 'axios';
+import { Character } from './types/Character.ts';
+
+interface AppState {
+    results: Character[];
+}
 
 class App extends Component {
-    state = {
+    state: AppState = {
         results: [],
     };
     async componentDidMount() {
@@ -13,7 +19,9 @@ class App extends Component {
 
     private async fetchResults(searchQuery: string) {
         try {
-            const data = await fetch(`https://rickandmortyapi.com/api/character/${searchQuery}`);
+            const response = await axios.get(`https://rickandmortyapi.com/api/character/${searchQuery}`);
+            const data = response.data.results.slice(0, 10);
+            console.log(data);
             this.setState({ results: data });
         } catch (error) {
             console.log(error);
