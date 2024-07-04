@@ -6,16 +6,19 @@ interface CharacterCardProps {
 }
 class CharacterCard extends Component<CharacterCardProps> {
     render() {
-        const { name, gender, image, status, type } = this.props.result;
+        const { name, gender, image, status, type, species } = this.props.result;
         return (
-            <div className={styles.card}>
+            <div
+                className={`${styles.card} ${status === 'Dead' ? styles.dead : ''} ${status === 'Alive' ? styles.alive : ''}`}
+            >
                 <div className={styles.cardTitle}>{name}</div>
                 <div className={styles.avatar}>
                     <img className={styles.image} src={image} alt={name}></img>
                 </div>
-                <div>{gender}</div>
-                <div>{status}</div>
-                <div>{type}</div>
+                <div>Gender - {gender || '...'}</div>
+                <div>Status - {status || '...'}</div>
+                <div>Species - {species || '...'}</div>
+                <div>Type - {type || '...'}</div>
             </div>
         );
     }
