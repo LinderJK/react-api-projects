@@ -1,6 +1,7 @@
 import React from 'react';
 import { Character } from '../../types/Character.ts';
 import CharacterCard from '../CharacterCard/CharacterCard.tsx';
+import styles from './ResultBar.module.css';
 
 interface ResultsProps {
     results: Character[];
@@ -11,15 +12,13 @@ class ResultBar extends React.Component<ResultsProps> {
         const { results } = this.props;
         return (
             <div>
-                {results.length > 0 ? (
-                    results.map((result) => (
-                        <div key={result.id} style={{ margin: '20px' }}>
-                            <CharacterCard result={result}></CharacterCard>
-                        </div>
-                    ))
-                ) : (
-                    <p>No results found.</p>
-                )}
+                <div style={{ margin: '20px' }} className={styles.resultBar}>
+                    {results.length > 0 ? (
+                        results.map((result) => <CharacterCard key={result.id} result={result}></CharacterCard>)
+                    ) : (
+                        <p>No results found.</p>
+                    )}
+                </div>
             </div>
         );
     }
