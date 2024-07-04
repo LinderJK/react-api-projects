@@ -3,6 +3,7 @@ import './App.css';
 import ResultBar from './components/ResultBar/ResultBar.tsx';
 import axios from 'axios';
 import { Character } from './types/Character.ts';
+import TitleBar from './components/TitleBar/TitleBar.tsx';
 
 interface AppState {
     results: Character[];
@@ -31,7 +32,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <h1>Hello finder</h1>
+                <TitleBar />
                 <ResultBar results={this.state.results}></ResultBar>
             </div>
         );
