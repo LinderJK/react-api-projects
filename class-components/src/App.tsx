@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import './App.css';
 import ResultBar from './components/ResultBar/ResultBar.tsx';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { Character } from './types/Character.ts';
 import TitleBar from './components/TitleBar/TitleBar.tsx';
 import SearchBar from './components/SearchBar/SearchBar.tsx';
@@ -9,12 +9,14 @@ import SearchBar from './components/SearchBar/SearchBar.tsx';
 interface AppState {
     results: Character[];
     searchQuery: string;
+    error: string | null;
 }
 
 class App extends Component {
     state: AppState = {
         results: [],
         searchQuery: '',
+        error: null,
     };
     async componentDidMount() {
         const queryByLs = localStorage.getItem('searchQuery') || '';
@@ -25,12 +27,19 @@ class App extends Component {
     }
 
     private async fetchResults(searchQuery: string) {
+        this.setState({ error: null });
         try {
             const response = await axios.get(`https://rickandmortyapi.com/api/character/?name=${searchQuery}`);
             const data = response.data.results;
             this.setState({ results: data });
-        } catch (error) {
-            console.error(error);
+        } catch (error: unknown) {
+            if (error) {
+                if (isAxiosError(error)) {
+                    this.setState({ error: error.response?.data.error });
+                }
+            } else {
+                console.error(error);
+            }
         }
     }
 
