@@ -1,37 +1,35 @@
 .card {
-  border: 1px solid red;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 200px;
-  padding: 10px;
-  background-color: black;
-  align-items: center;
-  transition: all 200ms ease-in-out;
-  gap: 10px;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 200px;
+    padding: 10px;
+    background-color: black;
+    align-items: center;
+    transition: all 200ms ease-in-out;
+    gap: 10px;
 }
 
 .alive {
-
-  box-shadow: 0 0 50px rgba(25, 227, 9, 0.58);
+    box-shadow: 0 0 50px rgba(25, 227, 9, 0.58);
 }
 
 .dead {
-  box-shadow: 0 0 50px rgba(255, 0, 0, 0.58);
+    box-shadow: 0 0 50px rgba(255, 0, 0, 0.58);
 }
 
 .cardTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .avatar {
-  max-width: 130px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid white;
-
+    max-width: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
 }
 
 .image {
-  width: 100%;
+    width: 100%;
 }
