@@ -21,7 +21,6 @@ class App extends Component {
     };
     async componentDidMount() {
         const queryByLs = localStorage.getItem('searchQuery') || '';
-        console.log(queryByLs, 'Search QUERY');
         this.setState({ searchQuery: queryByLs }, async () => {
             await this.fetchResults(this.state.searchQuery);
         });
