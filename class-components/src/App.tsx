@@ -11,6 +11,7 @@ interface AppState {
     results: Character[];
     searchQuery: string;
     error: string | null;
+    isLoading: boolean;
 }
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
         results: [],
         searchQuery: '',
         error: null,
+        isLoading: false,
     };
     async componentDidMount() {
         const queryByLs = localStorage.getItem('searchQuery') || '';
@@ -28,6 +30,7 @@ class App extends Component {
 
     private async fetchResults(searchQuery: string) {
         this.setState({ error: null });
+        this.setState({ isLoading: true });
         try {
             const response = await axios.get(`https://rickandmortyapi.com/api/character/?name=${searchQuery}`);
             const data = response.data.results;
@@ -40,6 +43,8 @@ class App extends Component {
             } else {
                 console.error(error);
             }
+        } finally {
+            this.setState({ isLoading: false });
         }
     }
 
@@ -56,7 +61,11 @@ class App extends Component {
                         <TitleBar />
                         <SearchBar onSearch={this.handleSearch} query={this.state.searchQuery} />
                     </div>
-                    <ResultBar results={this.state.results} error={this.state.error}></ResultBar>
+                    <ResultBar
+                        results={this.state.results}
+                        error={this.state.error}
+                        isLoading={this.state.isLoading}
+                    ></ResultBar>
                 </ErrorBoundary>
             </div>
         );
