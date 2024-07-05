@@ -8,6 +8,11 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended'
   ],
+  settings: {
+    "react": {
+      "version": "detect"
+    }
+  },
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react', 'react-refresh', '@typescript-eslint',  'react-compiler',  'prettier'],
