@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import RickLogo from '../../../public/portal.svg';
+import RickLogo from '/portal.svg';
 import styles from './TitleBar.module.css';
 
 class TitleBar extends Component {
