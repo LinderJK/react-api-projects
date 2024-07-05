@@ -1,17 +1,23 @@
 import React from 'react';
 import styles from './SearchBar.module.css';
 
-interface SearchBarProps {
+interface ISearchBarProps {
     query: string;
     onSearch: (query: string) => void;
 }
 
-class SearchBar extends React.Component<SearchBarProps> {
-    state = {
+interface ISearchBarState {
+    query: string;
+    error: boolean;
+}
+
+class SearchBar extends React.Component<ISearchBarProps> {
+    state: ISearchBarState = {
         query: this.props.query,
+        error: false,
     };
 
-    componentDidUpdate(prevProps: SearchBarProps) {
+    componentDidUpdate(prevProps: ISearchBarProps) {
         if (prevProps.query !== this.props.query) {
             this.setState({ query: this.props.query });
         }
@@ -25,7 +31,14 @@ class SearchBar extends React.Component<SearchBarProps> {
         this.props.onSearch(this.state.query);
     };
 
+    handleError = () => {
+        this.setState({ error: true });
+    };
+
     render() {
+        if (this.state.error) {
+            throw new Error('This Error generate in SearchBar component for testing ErrorBoundary');
+        }
         return (
             <div className={styles.searchBar}>
                 <input
@@ -35,6 +48,7 @@ class SearchBar extends React.Component<SearchBarProps> {
                     onChange={this.handleInputChange}
                 />
                 <button onClick={this.handleSearch}>Search</button>
+                <button onClick={this.handleError}>Error!</button>
             </div>
         );
     }

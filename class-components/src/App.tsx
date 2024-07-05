@@ -5,6 +5,7 @@ import axios, { isAxiosError } from 'axios';
 import { Character } from './types/Character.ts';
 import TitleBar from './components/TitleBar/TitleBar.tsx';
 import SearchBar from './components/SearchBar/SearchBar.tsx';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx';
 
 interface AppState {
     results: Character[];
@@ -51,11 +52,13 @@ class App extends Component {
     render() {
         return (
             <div className={'app'}>
-                <div className={'header'}>
-                    <TitleBar />
-                    <SearchBar onSearch={this.handleSearch} query={this.state.searchQuery} />
-                </div>
-                <ResultBar results={this.state.results}></ResultBar>
+                <ErrorBoundary fallback={<h1>Oh no an error occurred!</h1>}>
+                    <div className={'header'}>
+                        <TitleBar />
+                        <SearchBar onSearch={this.handleSearch} query={this.state.searchQuery} />
+                    </div>
+                    <ResultBar results={this.state.results} error={this.state.error}></ResultBar>
+                </ErrorBoundary>
             </div>
         );
     }
