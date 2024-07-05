@@ -41,9 +41,11 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <TitleBar />
-                <SearchBar onSearch={this.handleSearch} query={this.state.searchQuery} />
+            <div className={'app'}>
+                <div className={'header'}>
+                    <TitleBar />
+                    <SearchBar onSearch={this.handleSearch} query={this.state.searchQuery} />
+                </div>
                 <ResultBar results={this.state.results}></ResultBar>
             </div>
         );
