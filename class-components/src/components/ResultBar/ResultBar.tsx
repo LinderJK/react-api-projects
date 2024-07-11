@@ -28,26 +28,3 @@ export default function ResultBar(props: ResultsProps) {
         </div>
     );
 }
-
-// class ResultBar extends React.Component<ResultsProps> {
-//     render() {
-//         const { results, error, isLoading } = this.props;
-//         if (error) {
-//             return <h2 className={styles.error}>{error}</h2>;
-//         }
-//         if (isLoading) {
-//             return <p>Loading...</p>;
-//         }
-//         return (
-//             <div style={{ margin: '20px' }} className={styles.resultBar}>
-//                 {results && results.length > 0 ? (
-//                     results.map((result) => <CharacterCard key={result.id} result={result}></CharacterCard>)
-//                 ) : (
-//                     <p>No results found.</p>
-//                 )}
-//             </div>
-//         );
-//     }
-// }
-//
-// export default ResultBar;
