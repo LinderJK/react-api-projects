@@ -8,15 +8,7 @@ export function useLocalStorage() {
     });
 
     useEffect(() => {
-        const saveQuery = () => {
-            localStorage.setItem(SEARCH_QUERY_KEY, query);
-        };
-
-        saveQuery();
-
-        return () => {
-            saveQuery();
-        };
+        localStorage.setItem(SEARCH_QUERY_KEY, query);
     }, [query]);
 
     return { query, setQuery };
