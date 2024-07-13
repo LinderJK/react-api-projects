@@ -43,7 +43,7 @@ function MainPage() {
                 <TitleBar />
                 <SearchBar onSearch={handleSearch} query={query} />
             </div>
-            {pages && (
+            {!error && pages && (
                 <div className={styles.pagination}>
                     <button onClick={handlePreviousPage} disabled={page === 1}>
                         Previous
