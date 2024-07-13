@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Character } from '../types/Character.ts';
 import axios, { isAxiosError } from 'axios';
+// import useLocalStorage from './useLocalStorage.ts';
 
-const API_URL = 'https://rickandmortyapi.com/api/character/';
+const API_URL = 'https://rickandmortyapi.com/api/character';
 
-export function useApiRequest(query: string = '') {
+export function useApiRequest(query: string, page: number) {
     const [data, setData] = useState<Character[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [pages, setPages] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`${API_URL}/?name=${query}`);
-                if (response) {
-                    return response.data.results;
-                }
+                const response = await axios.get(`${API_URL}/?name=${query}&page=${page}`);
+                setData(response.data.results);
+                setPages(response.data.info.pages);
+                setError(null);
             } catch (error: unknown) {
                 if (isAxiosError(error)) {
                     setError(error.response?.data.error || 'An error occurred');
@@ -24,19 +26,12 @@ export function useApiRequest(query: string = '') {
                     setError('An unexpected error occurred');
                     console.error(error);
                 }
-                return [];
+            } finally {
+                setLoading(false);
             }
         };
-        fetchData()
-            .then((data) => {
-                setData(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error(error);
-                setLoading(false);
-            });
-    }, [query]);
+        fetchData();
+    }, [query, page]);
 
-    return { data, loading, error };
+    return { data, loading, error, pages };
 }
