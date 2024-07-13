@@ -2,16 +2,16 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/main/MainPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
-import Details from './components/Details/Details.tsx';
+import DetailsPage from './pages/DetailsPage/DetailsPage.tsx';
 
 export default function App() {
     return (
         <div className={'app'}>
             <Routes>
-                <Route path="/" element={<Details />}>
-                    <Route index element={<MainPage />}></Route>
-                    <Route path="*" element={<NotFoundPage />}></Route>
+                <Route path="/" element={<MainPage />}>
+                    <Route path="/details/:id" element={<DetailsPage />} />
                 </Route>
+                <Route path="*" element={<NotFoundPage />}></Route>
             </Routes>
         </div>
     );
