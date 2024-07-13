@@ -10,19 +10,23 @@ export default function CharacterCard(props: CharacterCardProps) {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const isDetails = (() => {
+        return location.pathname.startsWith('/details/');
+    })();
+
     const handleClick = () => {
         navigate(`/details/${id}${location.search}`);
     };
     return (
         <div
             onClick={handleClick}
-            className={`${styles.card} ${status === 'Dead' ? styles.dead : ''} ${status === 'Alive' ? styles.alive : ''}`}
+            className={`${styles.card} ${status === 'Dead' ? styles.dead : ''} ${status === 'Alive' ? styles.alive : ''} ${isDetails ? '' : styles.cardActive}`}
         >
             <div className={styles.cardTitle}>{name}</div>
             <div className={styles.avatar}>
                 <img className={styles.image} src={image} alt={name}></img>
             </div>
-            {location.pathname.startsWith('/details/') && (
+            {isDetails && (
                 <>
                     <div>Gender - {gender || '...'}</div>
                     <div>Status - {status || '...'}</div>

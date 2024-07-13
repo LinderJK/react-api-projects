@@ -6,12 +6,16 @@
     padding: 10px;
     background-color: black;
     align-items: center;
-    transition: all 200ms ease-in-out;
     gap: 10px;
-    cursor: pointer;
+
 }
 
-.card:hover {
+.cardActive {
+  /*transition: all 200ms ease-in-out;*/
+  cursor: pointer;
+}
+
+.cardActive:hover {
   transform: scale(1.05);
   transition: all 200ms ease-in-out;
 }
