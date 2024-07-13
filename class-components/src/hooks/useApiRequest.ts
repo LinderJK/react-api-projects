@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Character } from '../types/Character.ts';
 import axios, { isAxiosError } from 'axios';
-// import useLocalStorage from './useLocalStorage.ts';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
 
