@@ -21,7 +21,7 @@ export default function ResultBar(props: ResultsProps) {
     return (
         <div style={{ margin: '20px' }} className={styles.resultBar}>
             {results && results.length > 0 ? (
-                results.map((result) => <CharacterCard key={result.id} result={result}></CharacterCard>)
+                results.map((result) => <CharacterCard key={result.id} character={result}></CharacterCard>)
             ) : (
                 <p>No results found.</p>
             )}
