@@ -8,12 +8,15 @@
 }
 
 .titleBar {
-    margin: 0 auto;
     display: flex;
     flex-direction: row;
     gap: 20px;
     justify-content: center;
     align-items: center;
+}
+
+.titleBar:hover {
+  cursor: pointer;
 }
 
 .logoPortal {
