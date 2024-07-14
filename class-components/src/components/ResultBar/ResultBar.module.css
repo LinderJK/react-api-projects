@@ -3,7 +3,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
-    min-width: 1280px;
 }
 
 .error {
