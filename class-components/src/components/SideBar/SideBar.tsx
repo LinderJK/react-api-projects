@@ -10,14 +10,12 @@ export default function SideBar() {
     const [error, setError] = useState<string | null>();
     const [loading, setLoading] = useState<boolean>(false);
     const { id } = useParams();
-    console.log(id, 'ID');
 
     useEffect(() => {
         const getSidebarData = async () => {
             setLoading(true);
             try {
                 const response = await axios.get(`https://rickandmortyapi.com/api/character/${id}`);
-                console.log(response, 'response');
                 if (response.data) {
                     setData(response.data);
                 }
