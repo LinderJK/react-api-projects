@@ -12,7 +12,6 @@ export default function App() {
                     <Route path="/details/:id" element={<DetailsPage />} />
                 </Route>
                 <Route path="/404" element={<NotFoundPage />} />
-                {/*<Route path="*" element={<NotFoundPage />}></Route>*/}
                 <Route path="*" element={<Navigate to="/404" replace />} />
             </Routes>
         </div>
