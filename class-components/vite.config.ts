@@ -7,7 +7,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTest.ts',
+    setupFiles: './src/tests/setup.ts',
+    coverage: {
+      provider: 'v8',
+    },
   },
   define: {
     _global: ({})
