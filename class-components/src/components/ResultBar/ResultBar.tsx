@@ -8,19 +8,11 @@ interface IResultBarProps {
 }
 
 export default function ResultBar({ searchQuery, currentPage }: IResultBarProps) {
-    // const dispatch = useAppDispatch();
     const { data, isLoading, error } = characterAPI.useGetCharactersByPageQuery({
         page: currentPage,
         name: searchQuery,
     });
 
-    // useEffect(() => {
-    //     if (data?.results) {
-    //         dispatch(setCharacters(data.results));
-    //     }
-    // }, [data, dispatch]);
-
-    console.log(data, 'character query loaded');
     if (error) {
         return <h2 className={styles.error}>{'An error occurred'}</h2>;
     }
