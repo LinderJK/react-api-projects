@@ -14,3 +14,13 @@ export interface Character {
     url: string;
     created: number;
 }
+
+export interface CharacterResponse {
+    info: {
+        count: number;
+        pages: number;
+        next: string;
+        prev: string;
+    };
+    results: Character[];
+}
