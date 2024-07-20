@@ -19,7 +19,7 @@ const Pagination = () => {
     };
 
     return (
-        <div>
+        <>
             {maxPages > 0 && (
                 <div className={styles.pagination}>
                     <button onClick={handlePreviousPage} disabled={currentPage === 1}>
@@ -33,7 +33,7 @@ const Pagination = () => {
                     </button>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 
