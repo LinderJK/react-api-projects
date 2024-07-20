@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './SearchBar.module.css';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
+import { setCurrentPage, setSearchQuery } from '../../store/reducers/SearchSlice.ts';
+import useLocalStorage from '../../hooks/useLocalStorage.ts';
 
-interface ISearchBarProps {
-    query: string;
-    onSearch: (query: string) => void;
-}
-
-export default function SearchBar({ query, onSearch }: ISearchBarProps) {
-    const [inputValue, setInputValue] = useState(query);
+export default function SearchBar() {
+    const { query, setQuery } = useLocalStorage();
+    const dispatch = useAppDispatch();
+    const { searchQuery } = useAppSelector((state) => state.search);
+    const [inputValue, setInputValue] = useState(searchQuery);
     const [errorBoundary, setErrorBoundary] = useState(false);
 
     useEffect(() => {
-        setInputValue(query);
-    }, [query]);
+        setInputValue(searchQuery);
+    }, [searchQuery]);
+
+    useEffect(() => {
+        if (query) {
+            dispatch(setSearchQuery(query));
+            dispatch(setCurrentPage(1));
+        }
+    }, [query, dispatch]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value);
+        setInputValue(event.target.value.trim());
     };
     const handleSearch = () => {
-        onSearch(inputValue.trim());
+        setQuery(inputValue);
     };
 
     const handleError = () => {

@@ -1,4 +1,3 @@
-import useLocalStorage from '../../hooks/useLocalStorage.ts';
 import TitleBar from '../../components/TitleBar/TitleBar.tsx';
 import SearchBar from '../../components/SearchBar/SearchBar.tsx';
 import ResultBar from '../../components/ResultBar/ResultBar.tsx';
@@ -12,24 +11,12 @@ import { setSearchQuery } from '../../store/reducers/SearchSlice.ts';
 function MainPage() {
     const dispatch = useAppDispatch();
 
-    const { query } = useLocalStorage();
-    if (query) {
-        console.log('Search query is ' + query);
-        dispatch(setSearchQuery(query));
-    }
-
     const { currentPage, searchQuery } = useAppSelector((state) => state.search);
     const { error } = useAppSelector((state) => state.character);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const navigate = useNavigate();
     const location = useLocation();
-
-    // useEffect(() => {
-    //     if (query) {
-    //         dispatch(setSearchQuery(query));
-    //     }
-    // }, []);
 
     useEffect(() => {
         if (!searchParams.get('page')) {
