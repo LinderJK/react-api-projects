@@ -16,10 +16,4 @@ export const characterAPI = createApi({
     }),
 });
 
-export const {
-    // useGetAllCharacterQuery,
-    // useGetCharacterQuery,
-    // useGetCharacterByNameQuery,
-    useGetCharacterByIdQuery,
-    useGetCharactersByPageQuery,
-} = characterAPI;
+export const { useGetCharacterByIdQuery, useGetCharactersByPageQuery } = characterAPI;
