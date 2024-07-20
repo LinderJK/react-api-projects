@@ -1,6 +1,6 @@
 import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import MainPage from './pages/main/MainPage.tsx';
+import MainPage from './pages/MainPage/MainPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import DetailsPage from './pages/DetailsPage/DetailsPage.tsx';
 
