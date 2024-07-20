@@ -6,7 +6,7 @@ export interface ICharacterState {
     characters: Character[];
     isLoading: boolean;
     error: Error | string;
-    selectedIds: Set<number>;
+    selectedIds: Array<number>;
     isDetailsOpen: boolean;
 }
 
@@ -14,7 +14,7 @@ const initialState: ICharacterState = {
     characters: [],
     isLoading: false,
     error: '',
-    selectedIds: new Set(),
+    selectedIds: [],
     isDetailsOpen: false,
 };
 
@@ -26,10 +26,10 @@ export const characterSlice = createSlice({
             state.characters = action.payload;
         },
         selectCharacter(state, action: PayloadAction<number>) {
-            state.selectedIds.add(action.payload);
+            state.selectedIds.push(action.payload);
         },
         unselectCharacter(state, action: PayloadAction<number>) {
-            state.selectedIds.delete(action.payload);
+            state.selectedIds = state.selectedIds.filter((id) => id !== action.payload);
         },
         // selectAllCharacter(state, action: PayloadAction<Character>) {
         //     state.selected.push(action.payload);
