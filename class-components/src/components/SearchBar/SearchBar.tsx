@@ -1,22 +1,19 @@
 import { useState } from 'react';
 import styles from './SearchBar.module.css';
-import { useAppDispatch } from '../../hooks/redux.ts';
-import { setCurrentPage, setSearchQuery } from '../../store/reducers/SearchSlice.ts';
 import useLocalStorage from '../../hooks/useLocalStorage.ts';
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchBar() {
     const { query, setQuery } = useLocalStorage();
-    const dispatch = useAppDispatch();
     const [inputValue, setInputValue] = useState(query || '');
     const [errorBoundary, setErrorBoundary] = useState(false);
-
+    const navigate = useNavigate();
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value.trim());
     };
     const handleSearch = () => {
         setQuery(inputValue);
-        dispatch(setSearchQuery(inputValue));
-        dispatch(setCurrentPage(1));
+        navigate(`/?name=${inputValue}&page=1`);
     };
 
     const handleError = () => {
