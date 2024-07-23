@@ -1,0 +1,18 @@
+.container {
+  position: fixed;
+  width: calc(100% - 80px);
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  margin: 20px;
+  padding:10px;
+  border: 1px solid red;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
