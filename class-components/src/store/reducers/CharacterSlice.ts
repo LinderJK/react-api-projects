@@ -6,7 +6,6 @@ export interface ICharacterState {
     characters: Character[];
     isLoading: boolean;
     error: Error | string;
-    selectedIds: Array<number>;
     isDetailsOpen: boolean;
 }
 
@@ -14,7 +13,6 @@ const initialState: ICharacterState = {
     characters: [],
     isLoading: false,
     error: '',
-    selectedIds: [],
     isDetailsOpen: false,
 };
 
@@ -25,21 +23,6 @@ export const characterSlice = createSlice({
         setCharacters(state, action: PayloadAction<Character[]>) {
             state.characters = action.payload;
         },
-        selectCharacter(state, action: PayloadAction<number>) {
-            state.selectedIds.push(action.payload);
-        },
-        unselectCharacter(state, action: PayloadAction<number>) {
-            state.selectedIds = state.selectedIds.filter((id) => id !== action.payload);
-        },
-        // selectAllCharacter(state, action: PayloadAction<Character>) {
-        //     state.selected.push(action.payload);
-        // },
-        // deleteCharacter(state, action: PayloadAction<Character>) {
-        //     state.selected = state.selected.filter((item) => item.id !== action.payload.id);
-        // },
-        // deleteAllCharacter(state) {
-        //     state.selected = [];
-        // },
     },
     extraReducers: (builder) => {
         builder.addMatcher(characterAPI.endpoints?.getCharactersByPage.matchFulfilled, (state, { payload }) => {
@@ -56,6 +39,6 @@ export const characterSlice = createSlice({
     },
 });
 
-export const { setCharacters, selectCharacter, unselectCharacter } = characterSlice.actions;
+export const { setCharacters } = characterSlice.actions;
 
 export default characterSlice.reducer;
