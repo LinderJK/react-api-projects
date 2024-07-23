@@ -1,21 +1,23 @@
 import styles from './pagination.module.css';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
-import { setCurrentPage } from '../../store/reducers/SearchSlice.ts';
+import { useAppSelector } from '../../hooks/redux.ts';
+import { useSearchParams } from 'react-router-dom';
 
 const Pagination = () => {
-    const dispatch = useAppDispatch();
     const { currentPage, maxPages } = useAppSelector((state) => state.search);
+    const [, setSearchParams] = useSearchParams();
 
     const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            dispatch(setCurrentPage(currentPage - 1));
-        }
+        setSearchParams((prev) => {
+            prev.set('page', (currentPage - 1).toString());
+            return prev;
+        });
     };
 
     const handleNextPage = () => {
-        if (currentPage < maxPages) {
-            dispatch(setCurrentPage(currentPage + 1));
-        }
+        setSearchParams((prev) => {
+            prev.set('page', (currentPage + 1).toString());
+            return prev;
+        });
     };
 
     return (
