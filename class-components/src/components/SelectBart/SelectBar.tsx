@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import styles from './SelectBar.module.css';
 import { unselectAllCharacter } from '../../store/reducers/FavoriteSlice.ts';
+import { downloadCSV } from '../../utils/generateCSV.ts';
 
 const SelectBar = () => {
     const dispatch = useAppDispatch();
@@ -17,8 +18,10 @@ const SelectBar = () => {
                     <div className={styles.content}>
                         <div className={styles.info}>{`Selected ${selected.length} items`}</div>
                         <div className={styles.control}>
-                            <button onClick={handleReset}>Reset All</button>
-                            <button>Download</button>
+                            <button onClick={handleReset}>Unselect all</button>
+                            <a href={downloadCSV(selected)} download={`rick_and_morty_${selected.length}.csv`}>
+                                <button>Download</button>
+                            </a>
                         </div>
                     </div>
                 </div>
