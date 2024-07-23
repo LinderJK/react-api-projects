@@ -7,6 +7,7 @@ import styles from './MainPage.module.css';
 import Pagination from '../../components/Pagination/Pagination.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import { setCurrentPage, setSearchQuery } from '../../store/reducers/SearchSlice.ts';
+import SelectBar from '../../components/SelectBart/SelectBar.tsx';
 
 function MainPage() {
     const dispatch = useAppDispatch();
@@ -15,18 +16,12 @@ function MainPage() {
 
     const { error } = useAppSelector((state) => state.character);
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const navigate = useNavigate();
     const location = useLocation();
-    const name = searchParams.get('name') || '';
-    const page = parseInt(searchParams.get('page') || '1', 10);
-
-    useEffect(() => {
-        if (searchQuery !== name || currentPage !== page) {
-            setSearchParams({ name: searchQuery, page: currentPage.toString() });
-        }
-    }, [searchQuery, currentPage]);
+    const name = searchParams.get('name') ?? '';
+    const page = parseInt(searchParams.get('page') ?? '1', 10);
 
     useEffect(() => {
         if (searchQuery !== name) {
@@ -36,7 +31,7 @@ function MainPage() {
         if (currentPage !== page) {
             dispatch(setCurrentPage(page));
         }
-    }, [searchParams]);
+    }, [currentPage, dispatch, name, page, searchQuery]);
 
     const handleClose = () => {
         if (location.pathname.startsWith('/details/')) {
@@ -45,17 +40,20 @@ function MainPage() {
     };
 
     return (
-        <div className={styles.main}>
-            <div className={styles.left} onClick={handleClose}>
-                <div className={styles.header}>
-                    <TitleBar />
-                    <SearchBar />
-                    {!error && <Pagination />}
+        <>
+            <div className={styles.main}>
+                <div className={styles.left} onClick={handleClose}>
+                    <div className={styles.header}>
+                        <TitleBar />
+                        <SearchBar />
+                        {!error && <Pagination />}
+                    </div>
+                    <ResultBar searchQuery={searchQuery} currentPage={currentPage}></ResultBar>
                 </div>
-                <ResultBar searchQuery={searchQuery} currentPage={currentPage}></ResultBar>
+                <SelectBar></SelectBar>
+                <Outlet></Outlet>
             </div>
-            <Outlet></Outlet>
-        </div>
+        </>
     );
 }
 
