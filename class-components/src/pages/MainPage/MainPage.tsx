@@ -8,6 +8,7 @@ import Pagination from '../../components/Pagination/Pagination.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import { setCurrentPage, setSearchQuery } from '../../store/reducers/SearchSlice.ts';
 import SelectBar from '../../components/SelectBart/SelectBar.tsx';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle.tsx';
 
 function MainPage() {
     const dispatch = useAppDispatch();
@@ -45,6 +46,7 @@ function MainPage() {
                 <div className={styles.left} onClick={handleClose}>
                     <div className={styles.header}>
                         <TitleBar />
+                        <ThemeToggle></ThemeToggle>
                         <SearchBar />
                         {!error && <Pagination />}
                     </div>
