@@ -3,7 +3,7 @@
   width: calc(100% - 80px);
   right: 0;
   bottom: 0;
-  background-color: black;
+  background-color: var(--background-color);
   margin: 20px;
   padding:10px;
   border: 1px solid red;
