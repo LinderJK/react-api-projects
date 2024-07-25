@@ -22,8 +22,6 @@ export default function SideBar() {
         return <div className={styles.detailsContainer}>Invalid character ID</div>;
     }
 
-    console.log(data, 'character ID is valid DATA!!!!');
-
     return (
         <div className={styles.detailsContainer}>
             {error && <div>{error.toString()}</div>}

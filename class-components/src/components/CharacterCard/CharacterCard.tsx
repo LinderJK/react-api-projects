@@ -2,7 +2,7 @@ import { Character } from '../../types/Character.ts';
 import styles from './CharacterCard.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
-import { useCallback } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { favoriteSlice } from '../../store/reducers/FavoriteSlice.ts';
 interface CharacterCardProps {
     character: Character;
@@ -33,7 +33,7 @@ export default function CharacterCard(props: CharacterCardProps) {
         [selected],
     );
 
-    const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             dispatch(selectCharacter(props.character));
         } else {
@@ -49,7 +49,12 @@ export default function CharacterCard(props: CharacterCardProps) {
             <div onClick={handleClick} className={styles.avatar}>
                 <img className={styles.image} src={image} alt={name}></img>
             </div>
-            <input type={'checkbox'} onChange={handleCheck} checked={isSelectedCharacter(id)} />
+            <input
+                className={styles.selectItem}
+                type={'checkbox'}
+                onChange={handleCheck}
+                checked={isSelectedCharacter(id)}
+            />
             {isDetails && (
                 <>
                     <div>Gender - {gender || '...'}</div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styles from './SearchBar.module.css';
 import useLocalStorage from '../../hooks/useLocalStorage.ts';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ export default function SearchBar() {
     const [inputValue, setInputValue] = useState(query || '');
     const [errorBoundary, setErrorBoundary] = useState(false);
     const navigate = useNavigate();
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value.trim());
     };
     const handleSearch = () => {
