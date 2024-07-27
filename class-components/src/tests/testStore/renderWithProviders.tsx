@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { AppStore, RootState, setupStore } from './setupStore';
+import { ThemeProvider } from '../../context/ThemeContext.tsx';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
     preloadedState?: Partial<RootState>;
@@ -18,7 +19,9 @@ export function renderWithProviders(
     }: ExtendedRenderOptions = {},
 ) {
     const Wrapper = ({ children }: PropsWithChildren<object>): JSX.Element => (
-        <Provider store={store}>{children}</Provider>
+        <Provider store={store}>
+            <ThemeProvider>{children}</ThemeProvider>
+        </Provider>
     );
 
     return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
