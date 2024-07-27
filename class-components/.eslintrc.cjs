@@ -17,6 +17,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react', 'react-refresh', '@typescript-eslint',  'react-compiler',  'prettier'],
   rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     '@typescript-eslint/no-explicit-any': 'error',
     'react-compiler/react-compiler': 'error',
     'prettier/prettier': 'error',
