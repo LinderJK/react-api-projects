@@ -5,7 +5,7 @@ import MainPage from '../pages/MainPage/MainPage.tsx';
 import { fireEvent, screen } from '@testing-library/react';
 
 describe('NotFoundPage Component test', () => {
-    test('renders the NotFoundPage component', () => {
+    test('Renders the NotFoundPage component', () => {
         renderWithProviders(
             <MemoryRouter initialEntries={['/404']}>
                 <Routes>

@@ -42,7 +42,7 @@ describe('CharacterCard Component test', () => {
         expect(checkbox).toBeChecked();
     });
 
-    test('renders the CharacterCard component with title and image', () => {
+    test('Renders the CharacterCard component with title and image', () => {
         renderWithProviders(
             <MemoryRouter initialEntries={['/']}>
                 <CharacterCard character={data} />
@@ -57,7 +57,7 @@ describe('CharacterCard Component test', () => {
         expect(checkbox).toBeInTheDocument();
     });
 
-    test('navigates to DetailsPage', async () => {
+    test('Navigate to DetailsPage', async () => {
         renderWithProviders(
             <MemoryRouter initialEntries={['/']}>
                 <Routes>
@@ -75,7 +75,7 @@ describe('CharacterCard Component test', () => {
             expect(detailsHeading).toBeInTheDocument();
         });
     });
-    test('checks the checkbox', async () => {
+    test('Checks the checkbox', async () => {
         renderWithProviders(
             <MemoryRouter initialEntries={['/']}>
                 <CharacterCard character={data} />
@@ -88,7 +88,7 @@ describe('CharacterCard Component test', () => {
         });
     });
 
-    test('unchecks the checkbox', async () => {
+    test('Unchecks the checkbox', async () => {
         renderWithProviders(
             <MemoryRouter initialEntries={['/']}>
                 <CharacterCard character={data} />

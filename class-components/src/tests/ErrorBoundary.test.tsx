@@ -24,8 +24,8 @@ afterEach(() => {
     console.error = consoleError;
 });
 
-describe('ErrorBoundary Component', () => {
-    test('renders children when no error occurs', () => {
+describe('ErrorBoundary Component test', () => {
+    test('Renders children when no error occurs', () => {
         renderWithProviders(
             <ErrorBoundary fallback={<FallbackComponent />}>
                 <div>Content</div>
@@ -35,7 +35,7 @@ describe('ErrorBoundary Component', () => {
         expect(screen.getByText('Content')).toBeInTheDocument();
     });
 
-    test('renders fallback UI when error occurs', () => {
+    test('Renders fallback UI when error occurs', () => {
         renderWithProviders(
             <ErrorBoundary fallback={<FallbackComponent />}>
                 <ProblematicComponent />

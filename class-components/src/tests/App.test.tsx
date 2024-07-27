@@ -6,7 +6,7 @@ import { ThemeProvider } from '../context/ThemeContext.tsx';
 import { fireEvent, screen } from '@testing-library/react';
 
 describe('App test', () => {
-    test('renders the App component', () => {
+    test('Renders the App component', () => {
         renderWithProviders(
             <MemoryRouter>
                 <App />
@@ -14,7 +14,7 @@ describe('App test', () => {
         );
     });
 
-    test('toggle theme', () => {
+    test('Toggle theme', () => {
         renderWithProviders(
             <MemoryRouter>
                 <ThemeProvider>
@@ -33,7 +33,7 @@ describe('App test', () => {
         fireEvent.click(button);
         expect(button).toHaveTextContent(/Switch to Light/i);
     });
-    test('checks the error'),
+    test('Checks the error'),
         () => {
             renderWithProviders(
                 <MemoryRouter initialEntries={['/']}>

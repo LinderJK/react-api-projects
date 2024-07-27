@@ -71,7 +71,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('ResultBar Component test', () => {
-    test('Отображает указанное количество карт', { retry: 2 }, async () => {
+    test('Displays the specified number of cards', { retry: 2 }, async () => {
         renderWithProviders(
             <MemoryRouter initialEntries={['/']}>
                 <ResultBar searchQuery={'Rick'} currentPage={1} />
@@ -90,14 +90,14 @@ describe('ResultBar Component test', () => {
         });
     });
 
-    test('Отображает сообщение при отсутствии карт', async () => {
+    test('Displays a message when there are no cards', async () => {
         renderWithProviders(<ResultBar searchQuery={'FFF'} currentPage={1} />);
         await waitFor(() => {
             expect(screen.getByText('Results not found')).toBeInTheDocument();
         });
     });
 
-    test('Отображает индикатор загрузки', () => {
+    test('Displays a loading indicator', () => {
         renderWithProviders(<ResultBar searchQuery={'Rick'} currentPage={1} />);
         expect(screen.getByText('Loading...')).toBeInTheDocument();
     });

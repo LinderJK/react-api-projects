@@ -37,7 +37,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('DetailsPage Component test', () => {
-    test('renders the DetailsPage component with "Details"', async () => {
+    test('Renders the DetailsPage component with "Details"', async () => {
         renderWithProviders(
             <MemoryRouter initialEntries={[`/details/1`]}>
                 <Routes>
@@ -63,7 +63,7 @@ describe('DetailsPage Component test', () => {
         });
     });
 
-    test('handles button close click to navigate', async () => {
+    test('Handles button close click to navigate', async () => {
         renderWithProviders(
             <MemoryRouter initialEntries={[`/details/1?name=Rick&page=1`]}>
                 <Routes>

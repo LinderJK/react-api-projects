@@ -6,8 +6,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { downloadCSV } from '../utils/generateCSV.ts';
 
 vi.mock('../utils/generateCSV.ts');
-describe('SelectBar test', () => {
-    test('renders the SelectBar component', async () => {
+describe('SelectBar Component test', () => {
+    test('Renders the SelectBar component', async () => {
         const { store } = renderWithProviders(
             <MemoryRouter initialEntries={['/']}>
                 <MainPage />
@@ -45,7 +45,7 @@ describe('SelectBar test', () => {
         expect(downloadCSV).toHaveBeenCalled();
     });
 
-    test('renders the SelectBar component', async () => {
+    test('Renders the SelectBar component', async () => {
         const { store } = renderWithProviders(
             <MemoryRouter initialEntries={['/']}>
                 <MainPage></MainPage>
