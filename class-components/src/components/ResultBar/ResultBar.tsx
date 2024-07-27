@@ -14,7 +14,7 @@ export default function ResultBar({ searchQuery, currentPage }: IResultBarProps)
     });
 
     if (error) {
-        return <h2 className={styles.error}>{'An error occurred'}</h2>;
+        return <h2 className={styles.error}>{'Results not found'}</h2>;
     }
     if (isLoading) {
         return <p>Loading...</p>;
