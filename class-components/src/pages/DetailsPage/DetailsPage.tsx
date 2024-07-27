@@ -5,7 +5,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 function DetailsPage() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    console.log(searchParams, navigate);
     const handleClick = () => {
         const name = searchParams.get('name');
         const page = searchParams.get('page');
