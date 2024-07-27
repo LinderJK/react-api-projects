@@ -26,8 +26,6 @@ export const generateCSV = (data: Array<Character>) => {
     if (formatData.length === 0) return '';
     const headers = Object.keys(formatData[0]);
 
-    console.log(headers);
-
     const csvRows = [
         headers.join(','),
         ...formatData.map((row) => headers.map((header) => JSON.stringify(row[header], replacer)).join(',')),
