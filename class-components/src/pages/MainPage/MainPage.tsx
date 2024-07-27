@@ -7,7 +7,7 @@ import styles from './MainPage.module.css';
 import Pagination from '../../components/Pagination/Pagination.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import { setCurrentPage, setSearchQuery } from '../../store/reducers/SearchSlice.ts';
-import SelectBar from '../../components/SelectBart/SelectBar.tsx';
+import SelectBar from '../../components/SelectBar/SelectBar.tsx';
 import ThemeToggle from '../../components/ThemeToggle/ThemeToggle.tsx';
 
 function MainPage() {
