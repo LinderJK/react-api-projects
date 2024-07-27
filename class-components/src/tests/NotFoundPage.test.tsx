@@ -12,7 +12,6 @@ describe('NotFoundPage Component test', () => {
                     <Route path="/404" element={<NotFoundPage />}></Route>
                     <Route path="/" element={<MainPage></MainPage>}></Route>
                 </Routes>
-                {/*<NotFoundPage />*/}
             </MemoryRouter>,
         );
         const title = screen.getByText(`Page Not Found`);
