@@ -2,15 +2,15 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import characterReducer from '../../store/reducers/CharacterSlice.ts';
 import { characterAPI } from '../../services/CharacterService.ts';
 import searchReducer from '../../store/reducers/SearchSlice.ts';
-import { favoriteSlice } from '../../store/reducers/FavoriteSlice.ts';
-import { detailsSlice } from '../../store/reducers/DetailsSlice.ts';
+import favoriteReducer from '../../store/reducers/FavoriteSlice.ts';
+import detailsReducer from '../../store/reducers/DetailsSlice.ts';
 
 const rootReducer = combineReducers({
     character: characterReducer,
     [characterAPI.reducerPath]: characterAPI.reducer,
     search: searchReducer,
-    favorite: favoriteSlice,
-    details: detailsSlice,
+    favorite: favoriteReducer,
+    details: detailsReducer,
 });
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {
