@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import DetailsPage from '../pages/DetailsPage/DetailsPage';
+import DetailsPage from '../pagesOld/DetailsPage/DetailsPage';
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import MainPage from '../pages/MainPage/MainPage.tsx';
+import MainPage from '../pagesOld/MainPage/MainPage.tsx';
 
 const data = {
     id: 1,
