@@ -23,7 +23,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': "off",
     'react-refresh/only-export-components': [
-      'warn',
+      'off',
       { allowConstantExport: true },
     ],
   },
