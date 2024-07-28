@@ -1,14 +1,21 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 const SEARCH_QUERY_KEY = 'searchQuery';
 
 export function useLocalStorage() {
     const [query, setQuery] = useState<string>(() => {
-        return localStorage.getItem(SEARCH_QUERY_KEY) || '';
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem(SEARCH_QUERY_KEY) || '';
+        }
+        return '';
     });
 
     useEffect(() => {
-        localStorage.setItem(SEARCH_QUERY_KEY, query);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(SEARCH_QUERY_KEY, query);
+        }
     }, [query]);
 
     return { query, setQuery };
