@@ -27,28 +27,24 @@ export default function SearchBar() {
         setErrorBoundary(!errorBoundary);
     };
 
+    if (errorBoundary) {
+        throw new Error('Test error for ErorrBoundary');
+        // return <div>Should not render</div>;
+    }
+
     return (
         <div className={styles.searchBar}>
-            {errorBoundary ? (
-                <div className={styles.errorContainer}>
-                    <h2 className={styles.errorText}>Oops! Render Error :(</h2>
-                    <button className={styles.retryButton} onClick={handleError}>
-                        Retry
-                    </button>
-                </div>
-            ) : (
-                <>
-                    <input
-                        className={styles.input}
-                        placeholder={'Input Character Name'}
-                        type="text"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                    />
-                    <button onClick={handleSearch}>Search</button>
-                    <button onClick={handleError}>Error!</button>
-                </>
-            )}
+            <>
+                <input
+                    className={styles.input}
+                    placeholder={'Input Character Name'}
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                />
+                <button onClick={handleSearch}>Search</button>
+                <button onClick={handleError}>Error!</button>
+            </>
         </div>
     );
 }
