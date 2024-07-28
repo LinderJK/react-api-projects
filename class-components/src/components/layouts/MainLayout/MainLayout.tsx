@@ -1,10 +1,10 @@
-import TitleBar from '../components/TitleBar/TitleBar.tsx';
-import ThemeToggle from '../components/ThemeToggle/ThemeToggle.tsx';
-import styles from '../styles/layout.module.css';
-import { useTheme } from '../hooks/useTheme.ts';
-import SearchBar from '../components/SearchBar/SearchBar.tsx';
+import TitleBar from '../../TitleBar/TitleBar.tsx';
+import ThemeToggle from '../../ThemeToggle/ThemeToggle.tsx';
+import styles from './layout.module.css';
+import { useTheme } from '../../../hooks/useTheme.ts';
+import SearchBar from '../../SearchBar/SearchBar.tsx';
 
-export default function Layout({ children }: { children: JSX.Element }) {
+export default function MainLayout({ children }: { children: JSX.Element }) {
     const { theme } = useTheme();
     return (
         <>
