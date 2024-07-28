@@ -1,16 +1,18 @@
 import styles from './styles.module.css';
-import { useParams } from 'react-router-dom';
 import CharacterCard from '../CharacterCard/CharacterCard.tsx';
 import { useGetCharacterByIdQuery } from '../../services/CharacterService.ts';
 import { useAppDispatch } from '../../hooks/redux.ts';
 import { addDetailsItem } from '../../store/reducers/DetailsSlice.ts';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function SideBar() {
-    const { id } = useParams();
+    const router = useRouter();
+    const { id } = router.query;
+    // console.log(router.query, id);
     const dispatch = useAppDispatch();
 
-    const { data, error, isLoading } = useGetCharacterByIdQuery(id || '', {
+    const { data, error, isLoading } = useGetCharacterByIdQuery((id as string) ?? '', {
         skip: !id,
     });
 
