@@ -1,12 +1,11 @@
-import RickLogo from '/portal.svg';
+import PortalLogo from '../../assets/portal.svg';
 import styles from './TitleBar.module.css';
-import { useNavigate } from 'react-router-dom';
+import Image from 'next/image';
 
 export default function TitleBar() {
-    const navigate = useNavigate();
     return (
-        <div className={styles.titleBar} onClick={() => navigate('/')}>
-            <img className={styles.logoPortal} src={RickLogo} alt="portal" />
+        <div className={styles.titleBar}>
+            <Image className={styles.logoPortal} src={PortalLogo} alt="portal" />
             <h1>Rick & Morty Character Finder</h1>
         </div>
     );
