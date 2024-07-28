@@ -1,19 +1,26 @@
+'use client';
 import { ChangeEvent, useState } from 'react';
 import styles from './SearchBar.module.css';
 import useLocalStorage from '../../hooks/useLocalStorage.ts';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 export default function SearchBar() {
     const { query, setQuery } = useLocalStorage();
-    const [inputValue, setInputValue] = useState(query || '');
+    const [inputValue, setInputValue] = useState(query ?? '');
     const [errorBoundary, setErrorBoundary] = useState(false);
-    const navigate = useNavigate();
+    const router = useRouter();
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value.trim());
     };
     const handleSearch = () => {
         setQuery(inputValue);
-        navigate(`/?name=${inputValue}&page=1`);
+        router.push({
+            pathname: '/character/',
+            query: {
+                page: 1,
+                name: inputValue,
+            },
+        });
     };
 
     const handleError = () => {

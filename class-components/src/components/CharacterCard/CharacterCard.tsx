@@ -1,29 +1,28 @@
 import { Character } from '../../types/Character.ts';
 import styles from './CharacterCard.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+// import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import { ChangeEvent, useCallback } from 'react';
 import { favoriteSlice } from '../../store/reducers/FavoriteSlice.ts';
+import { useRouter } from 'next/router';
 interface CharacterCardProps {
     character: Character;
 }
 
 export default function CharacterCard(props: CharacterCardProps) {
     const { name, gender, image, status, type, species, id } = props.character;
-
-    const navigate = useNavigate();
-    const location = useLocation();
+    const router = useRouter();
 
     const { selectCharacter, unselectCharacter } = favoriteSlice.actions;
     const dispatch = useAppDispatch();
     const { selected } = useAppSelector((state) => state.favorite);
 
     const isDetails = (() => {
-        return location.pathname.startsWith('/details/');
+        return router.pathname.startsWith('/details/');
     })();
 
     const handleClick = () => {
-        navigate(`/details/${id}${location.search}`);
+        router.push(`/details/${id}`);
     };
 
     const isSelectedCharacter = useCallback(

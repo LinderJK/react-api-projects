@@ -1,36 +1,36 @@
 import styles from './pagination.module.css';
-import { useAppSelector } from '../../hooks/redux.ts';
-import { useSearchParams } from 'react-router-dom';
+// import { useAppSelector } from '../../hooks/redux.ts';
+import { useRouter } from 'next/router';
+// import { useSearchParams } from 'next/navigation';
 
-const Pagination = () => {
-    const { currentPage, maxPages } = useAppSelector((state) => state.search);
-    const [, setSearchParams] = useSearchParams();
+type Props = {
+    currentPage: number;
+    maxPages: number;
+};
 
-    const handlePreviousPage = () => {
-        setSearchParams((prev) => {
-            prev.set('page', (currentPage - 1).toString());
-            return prev;
-        });
-    };
+const Pagination = ({ currentPage, maxPages }: Props) => {
+    // const { currentPage, maxPages } = useAppSelector((state) => state.search);
+    // const [, setSearchParams] = useSearchParams();
+    const router = useRouter();
+    const { query } = router;
+    // console.log(query, router);
 
-    const handleNextPage = () => {
-        setSearchParams((prev) => {
-            prev.set('page', (currentPage + 1).toString());
-            return prev;
-        });
+    const handleSetPage = (page: number) => {
+        const searchQuery = query.name ? `&name=${query.name}` : '';
+        router.push(`/character/?page=${page}${searchQuery}`);
     };
 
     return (
         <>
             {maxPages > 0 && (
                 <div className={styles.pagination}>
-                    <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                    <button onClick={() => handleSetPage(currentPage - 1)} disabled={currentPage === 1}>
                         Previous
                     </button>
 
                     <div>{`${currentPage} / ${maxPages}`}</div>
 
-                    <button onClick={handleNextPage} disabled={currentPage === maxPages}>
+                    <button onClick={() => handleSetPage(currentPage + 1)} disabled={currentPage === maxPages}>
                         Next
                     </button>
                 </div>
