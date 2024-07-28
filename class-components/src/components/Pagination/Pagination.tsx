@@ -1,19 +1,13 @@
 import styles from './pagination.module.css';
-// import { useAppSelector } from '../../hooks/redux.ts';
+import React from 'react';
 import { useRouter } from 'next/router';
-// import { useSearchParams } from 'next/navigation';
+import { useAppSelector } from '../../hooks/redux.ts';
 
-type Props = {
-    currentPage: number;
-    maxPages: number;
-};
-
-const Pagination = ({ currentPage, maxPages }: Props) => {
-    // const { currentPage, maxPages } = useAppSelector((state) => state.search);
-    // const [, setSearchParams] = useSearchParams();
+const Pagination = () => {
+    const { maxPages } = useAppSelector((state) => state.search);
     const router = useRouter();
     const { query } = router;
-    // console.log(query, router);
+    const currentPage = parseInt(query.page as string, 10) || 1;
 
     const handleSetPage = (page: number) => {
         const searchQuery = query.name ? `&name=${query.name}` : '';
@@ -21,7 +15,7 @@ const Pagination = ({ currentPage, maxPages }: Props) => {
     };
 
     return (
-        <>
+        <React.Fragment>
             {maxPages > 0 && (
                 <div className={styles.pagination}>
                     <button onClick={() => handleSetPage(currentPage - 1)} disabled={currentPage === 1}>
@@ -35,7 +29,7 @@ const Pagination = ({ currentPage, maxPages }: Props) => {
                     </button>
                 </div>
             )}
-        </>
+        </React.Fragment>
     );
 };
 
