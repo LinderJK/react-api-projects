@@ -1,10 +1,10 @@
 import styles from './pagination.module.css';
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useAppSelector } from '../../hooks/redux.ts';
+// import { useAppSelector } from '../../hooks/redux.ts';
 
-const Pagination = () => {
-    const { maxPages } = useAppSelector((state) => state.search);
+const Pagination = ({ maxPages }: { maxPages: number }) => {
+    // const { maxPages } = useAppSelector((state) => state.search);
     const router = useRouter();
     const { query } = router;
     const currentPage = parseInt(query.page as string, 10) || 1;
