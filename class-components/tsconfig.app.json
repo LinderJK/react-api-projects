@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable", "esnext"],
@@ -25,7 +26,12 @@
     "types": ["vitest/globals"],
   },
   "paths": {
-    "@/*": ["./src/*"]
+    "@components/*": ["components/*"],
+    "@layouts/*": ["components/layouts/*"],
+    "@styles/*": ["styles/*"],
+    "@utils/*": ["utils/*"],
+    "@assets/*": ["assets/*"],
+    "@store/*": ["store/*"]
   },
   "include": ["src", "./dist/types/**/*.ts", "./next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["./node_modules"],
