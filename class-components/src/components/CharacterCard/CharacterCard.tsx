@@ -24,7 +24,7 @@ export default function CharacterCard(props: CharacterCardProps) {
 
     const isSelectedCharacter = useCallback(
         (id: number) => {
-            return selected.some((selectedCharacter) => selectedCharacter.id === id);
+            return selected.some((selectedCharacter: Character) => selectedCharacter.id === id);
         },
         [selected],
     );
