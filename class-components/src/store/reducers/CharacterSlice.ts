@@ -1,6 +1,9 @@
 import { Character } from '../../types/Character.ts';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { characterAPI } from '../../services/CharacterService.ts';
+// import { Action } from 'redux';
+// import { RootState } from '../store.ts';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export interface ICharacterState {
     characters: Character[];
@@ -15,7 +18,6 @@ const initialState: ICharacterState = {
     error: '',
     isDetailsOpen: false,
 };
-
 export const characterSlice = createSlice({
     name: 'character',
     initialState,
@@ -25,6 +27,12 @@ export const characterSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(HYDRATE, (state, action: AnyAction) => {
+            return {
+                ...state,
+                ...(action.payload?.character ?? {}),
+            };
+        });
         builder.addMatcher(characterAPI.endpoints?.getCharactersByPage.matchFulfilled, (state, { payload }) => {
             state.characters = payload.results;
             state.isLoading = false;
