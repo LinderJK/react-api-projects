@@ -30,7 +30,6 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     const name = (context.query.name as string) ?? '';
 
     if (typeof name === 'string') {
-        // console.log('DISPATCH');
         store.dispatch(characterAPI.endpoints.getCharactersByPage.initiate({ name, page }));
     }
 
