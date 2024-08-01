@@ -1,8 +1,6 @@
 import { Character } from '../../types/Character.ts';
 import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { characterAPI } from '../../services/CharacterService.ts';
-// import { Action } from 'redux';
-// import { RootState } from '../store.ts';
 import { HYDRATE } from 'next-redux-wrapper';
 
 export interface ICharacterState {

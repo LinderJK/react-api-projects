@@ -13,7 +13,6 @@ export default function CharacterCard(props: CharacterCardProps) {
     const { name, gender, image, status, type, species, id } = props.character;
     const router = useRouter();
     const { page, name: queryName } = router.query;
-    // console.log(router, 'ROUTER CHARACTER CARD');
     const { selectCharacter, unselectCharacter } = favoriteSlice.actions;
     const dispatch = useAppDispatch();
     const { selected } = useAppSelector((state) => state.favorite);

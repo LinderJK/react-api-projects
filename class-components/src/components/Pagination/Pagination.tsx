@@ -1,7 +1,6 @@
 import styles from './pagination.module.css';
 import React from 'react';
 import { useRouter } from 'next/router';
-// import { useAppSelector } from '../../hooks/redux.ts';
 
 const Pagination = ({ maxPages }: { maxPages: number }) => {
     // const { maxPages } = useAppSelector((state) => state.search);

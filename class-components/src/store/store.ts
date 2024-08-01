@@ -22,9 +22,6 @@ export const makeStore: MakeStore<any> = ({ reduxWrapperMiddleware }) =>
     configureStore({
         reducer,
         devTools: true,
-        // middleware: (getDefaultMiddleware) => {
-        //     return getDefaultMiddleware().concat(characterAPI.middleware);
-        // },
         middleware: (getDefaultMiddleware) =>
             [
                 ...getDefaultMiddleware(),
@@ -40,6 +37,3 @@ export type RootState = ReturnType<AppStore['getState']>;
 export type AppDispatch = AppStore['dispatch'];
 
 export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });
-
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch;

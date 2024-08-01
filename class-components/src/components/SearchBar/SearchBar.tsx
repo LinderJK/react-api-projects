@@ -29,7 +29,6 @@ export default function SearchBar() {
 
     if (errorBoundary) {
         throw new Error('Test error for ErorrBoundary');
-        // return <div>Should not render</div>;
     }
 
     return (
