@@ -8,7 +8,7 @@ import logger from 'redux-logger';
 import { createWrapper, MakeStore } from 'next-redux-wrapper';
 import { Reducer } from 'react';
 
-const rootReducer: Reducer<RootState, AnyAction> = combineReducers({
+export const rootReducer: Reducer<RootState, AnyAction> = combineReducers({
     [characterSlice.name]: characterSlice.reducer,
     [characterAPI.reducerPath]: characterAPI.reducer,
     [searchSlice.name]: searchSlice.reducer,
@@ -24,9 +24,7 @@ export const makeStore: MakeStore<RootState> = () =>
         reducer: rootReducer,
         devTools: true,
         middleware: (getDefaultMiddleware) =>
-            [...getDefaultMiddleware(), process.browser ? logger : null, characterAPI.middleware].filter(
-                Boolean,
-            ) as never,
+            getDefaultMiddleware().concat(characterAPI.middleware, ...(process.browser ? [logger] : [])),
     });
 
 export type AppStore = ReturnType<typeof makeStore>;
