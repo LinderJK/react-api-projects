@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import ResultBar from '../components/ResultBar/ResultBar';
-import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, test } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
@@ -72,12 +71,7 @@ afterAll(() => server.close());
 
 describe('ResultBar Component test', () => {
     test('Displays the specified number of cards', { retry: 2 }, async () => {
-        renderWithProviders(
-            <MemoryRouter initialEntries={['/']}>
-                <ResultBar searchQuery={'Rick'} currentPage={1} />
-            </MemoryRouter>,
-        );
-
+        renderWithProviders(<ResultBar results={data.results} />);
         await waitFor(() => {
             data.results.forEach((result) => {
                 expect(screen.getByText(result.name)).toBeInTheDocument();
@@ -91,14 +85,14 @@ describe('ResultBar Component test', () => {
     });
 
     test('Displays a message when there are no cards', async () => {
-        renderWithProviders(<ResultBar searchQuery={'FFF'} currentPage={1} />);
+        renderWithProviders(<ResultBar results={[]} />);
         await waitFor(() => {
-            expect(screen.getByText('Results not found')).toBeInTheDocument();
+            expect(screen.getByText('No results found.')).toBeInTheDocument();
         });
     });
 
-    test('Displays a loading indicator', () => {
-        renderWithProviders(<ResultBar searchQuery={'Rick'} currentPage={1} />);
-        expect(screen.getByText('Loading...')).toBeInTheDocument();
-    });
+    // test('Displays a loading indicator', () => {
+    //     renderWithProviders(<ResultBar searchQuery={'Rick'} currentPage={1} />);
+    //     expect(screen.getByText('Loading...')).toBeInTheDocument();
+    // });
 });

@@ -1,32 +1,33 @@
-import { test } from 'vitest';
+import { expect, test } from 'vitest';
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
 import Pagination from '../components/Pagination/Pagination.tsx';
-import { screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import mockRouter from 'next-router-mock';
 
 describe('Pagination', () => {
-    test('should render', () => {
-        const { store } = renderWithProviders(
-            <MemoryRouter>
-                <Pagination></Pagination>
-            </MemoryRouter>,
-            {
-                preloadedState: {
-                    search: {
-                        searchQuery: '',
-                        currentPage: 1,
-                        maxPages: 10,
-                    },
-                },
-            },
-        );
-        const pagination = screen.getByText(
-            `${store.getState().search.currentPage} / ${store.getState().search.maxPages}`,
-        );
-        expect(pagination).toBeInTheDocument();
+    beforeAll(() => {
+        vi.mock('next/router', () => require('next-router-mock'));
+    });
+    afterEach(() => {
+        vi.clearAllMocks();
+        vi.resetAllMocks();
+    });
+    test('should render', async () => {
+        renderWithProviders(<Pagination maxPages={20}></Pagination>, {});
+        mockRouter.setCurrentUrl('/character?page=1');
         const btnPrev = screen.getByText('Previous');
         expect(btnPrev).toBeDisabled();
         const btnNext = screen.getByText('Next');
         expect(btnNext).toBeInTheDocument();
+        expect(btnPrev).toBeDisabled();
+        fireEvent.click(btnNext);
+        await waitFor(() => {
+            expect(mockRouter.asPath).toBe('/character?page=2');
+        });
+        expect(btnPrev).toBeEnabled();
+        fireEvent.click(btnPrev);
+        await waitFor(() => {
+            expect(mockRouter.asPath).toBe('/character?page=1');
+        });
     });
 });

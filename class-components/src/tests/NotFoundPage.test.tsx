@@ -1,24 +1,13 @@
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
-import NotFoundPage from '../pages/NotFoundPage.tsx';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import MainPage from '../pages/MainPage/MainPage.tsx';
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import Custom404 from '../pages/404.tsx';
 
 describe('NotFoundPage Component test', () => {
     test('Renders the NotFoundPage component', () => {
-        renderWithProviders(
-            <MemoryRouter initialEntries={['/404']}>
-                <Routes>
-                    <Route path="/404" element={<NotFoundPage />}></Route>
-                    <Route path="/" element={<MainPage></MainPage>}></Route>
-                </Routes>
-            </MemoryRouter>,
-        );
-        const title = screen.getByText(`Page Not Found`);
+        renderWithProviders(<Custom404 />);
+        const title = screen.getByText(`Oh....404 - Page Not Found`);
         expect(title).toBeInTheDocument();
-        const button = screen.getByText(`To main`);
+        const button = screen.getByText('Go Back');
         expect(button).toBeInTheDocument();
-        fireEvent.click(button);
-        expect(title).not.toBeInTheDocument();
     });
 });
