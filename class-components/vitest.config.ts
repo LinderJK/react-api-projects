@@ -9,6 +9,8 @@ export default defineConfig({
         setupFiles: './src/tests/setup.ts',
         coverage: {
             provider: 'v8',
+            include: ['src/**/*.{ts,tsx,js, jsx}'],
+            exclude: ['src/types/*.ts'],
         },
     },
     define: {
