@@ -3,7 +3,6 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 const Pagination = ({ maxPages }: { maxPages: number }) => {
-    // const { maxPages } = useAppSelector((state) => state.search);
     const router = useRouter();
     const { query } = router;
     const currentPage = parseInt(query.page as string, 10) || 1;
