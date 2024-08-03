@@ -16,10 +16,8 @@ async function CharacterPage({ searchParams }: { searchParams?: { [key: string]:
 
     return (
         <React.Fragment>
-            <h1>Character</h1>
             <Pagination maxPages={data.info.pages}></Pagination>
             <ResultBar results={data.results}></ResultBar>
-            {/*<SelectBar></SelectBar>*/}
         </React.Fragment>
     );
 }
