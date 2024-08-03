@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 
 const SEARCH_QUERY_KEY = 'searchQuery';

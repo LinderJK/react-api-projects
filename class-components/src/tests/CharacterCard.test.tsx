@@ -54,32 +54,6 @@ describe('CharacterCard Component test', () => {
         expect(checkbox).toBeInTheDocument();
     });
 
-    // test('Navigate to DetailsPage', async () => {
-    //     renderWithProviders(<CharacterCard character={data} />);
-    //     // await waitFor(() => {
-    //     //     mockRouter.push({
-    //     //         pathname: '/character/details/1',
-    //     //         query: { page: '1', name: 'Rick' },
-    //     //     });
-    //     // });
-    //     const imageElement = screen.getByAltText(data.name);
-    //     fireEvent.click(imageElement);
-    //     // expect(mockRouter).toMatchObject({
-    //     //     asPath: '/character/details/1?page=undefined&name=Rick',
-    //     //     // pathname: '/character/details/1',
-    //     //     // query: { page: '', name: 'Rick' },
-    //     // });
-    //     await waitFor(() => {
-    //         // expect(mockRouter).toMatchObject({
-    //         //     asPath: '/character/details/1?page=undefined&name=Rick',
-    //         // pathname: '/character/details/1',
-    //         // query: { page: '', name: 'Rick' },
-    //         // });
-    //
-    //         const detailsHeading = screen.getByRole('heading', { name: 'Details' });
-    //         expect(detailsHeading).toBeInTheDocument();
-    //     });
-    // });
     test('Checks the checkbox', async () => {
         renderWithProviders(<CharacterCard character={data} />);
         const checkbox = screen.getByRole('checkbox');

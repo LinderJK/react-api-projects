@@ -37,7 +37,6 @@ function DetailsPage(props: InferGetServerSidePropsType<typeof getServerSideProp
 }
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
-    // console.log(context, 'CONTEXT DETAILS PAGE');
     const page = (context.query.page as string) ?? '1';
     const name = (context.query.name as string) ?? '';
     const id = (context.query.id as string) ?? '';

@@ -90,9 +90,4 @@ describe('ResultBar Component test', () => {
             expect(screen.getByText('No results found.')).toBeInTheDocument();
         });
     });
-
-    // test('Displays a loading indicator', () => {
-    //     renderWithProviders(<ResultBar searchQuery={'Rick'} currentPage={1} />);
-    //     expect(screen.getByText('Loading...')).toBeInTheDocument();
-    // });
 });

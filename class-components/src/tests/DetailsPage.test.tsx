@@ -92,18 +92,4 @@ describe('DetailsPage Component test', () => {
             expect(typeElement).toBeInTheDocument();
         });
     });
-
-    // test('Handles button close click to navigate', async () => {
-    //     mockRouter.setCurrentUrl(`/character/details/${data.dataDetails.id}`);
-    //     renderWithProviders(<DetailsPage pageProps={data} />);
-    //
-    //     const closeButton = screen.getByText('Close');
-    //     expect(closeButton).toBeInTheDocument();
-    //
-    //     fireEvent.click(closeButton);
-    //
-    //     await waitFor(() => {
-    //         expect(mockRouter.pathname).not.toContain('/details');
-    //     });
-    // });
 });

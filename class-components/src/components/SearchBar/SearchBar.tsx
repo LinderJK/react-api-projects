@@ -1,4 +1,3 @@
-'use client';
 import { ChangeEvent, useState } from 'react';
 import styles from './SearchBar.module.css';
 import useLocalStorage from '../../hooks/useLocalStorage.ts';

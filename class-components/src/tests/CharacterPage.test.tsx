@@ -74,7 +74,6 @@ describe('SelectBar Component test', () => {
 
     test('Renders the SelectBar component', async () => {
         renderWithProviders(<CharacterPage pageProps={{ data: data }} />);
-        // expect(store.getState().character.isLoading).toBe(true);
     });
 
     test('Checks the error'),
