@@ -5,11 +5,11 @@ import SearchBar from '../SearchBar/SearchBar.tsx';
 
 const Header = () => {
     return (
-        <>
+        <div className="header">
             <TitleBar />
             <ThemeToggle></ThemeToggle>
             <SearchBar />
-        </>
+        </div>
     );
 };
 
