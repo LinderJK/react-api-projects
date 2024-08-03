@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import './globals.css';
-import { ThemeProvider } from '../context/ThemeContext.tsx';
 import StoreProvider from './StoreProvider.tsx';
 import Header from '../components/Shared/Header.tsx';
+import { ThemeProvider } from '../context/ThemeProvider.tsx';
 
 export const metadata: Metadata = {
     title: 'Rick and Morty Characters',
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <StoreProvider>
                     <ThemeProvider>
                         <Header></Header>
-                        {children}
+                        <main className="main">{children}</main>
                     </ThemeProvider>
                 </StoreProvider>
             </body>
