@@ -23,12 +23,12 @@ const Pagination = ({ maxPages }: { maxPages: number }) => {
             {maxPages > 0 && (
                 <div className={styles.pagination}>
                     <Link href={`${pathname}?${createQueryString(currentPage - 1)}`}>
-                        <button>Previous</button>
+                        <button disabled={currentPage === 1}>Previous</button>
                     </Link>
 
                     <div>{`${currentPage ?? 1} / ${maxPages}`}</div>
                     <Link href={`${pathname}?${createQueryString(currentPage + 1)}`}>
-                        <button>Next</button>
+                        <button disabled={currentPage === maxPages}>Next</button>
                     </Link>
                 </div>
             )}
