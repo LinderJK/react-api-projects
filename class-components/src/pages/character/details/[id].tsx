@@ -42,7 +42,6 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     const id = (context.query.id as string) ?? '';
 
     if (typeof name === 'string') {
-        // console.log('DISPATCH');
         store.dispatch(characterAPI.endpoints?.getCharacterById.initiate(id));
         store.dispatch(characterAPI.endpoints?.getCharactersByPage.initiate({ name, page }));
     }
