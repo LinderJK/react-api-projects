@@ -1,25 +1,21 @@
+'use client';
 import { Character } from '../../types/Character.ts';
 import styles from './CharacterCard.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
-import { ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { favoriteSlice } from '../../store/reducers/FavoriteSlice.ts';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+
 interface CharacterCardProps {
     character: Character;
+    children?: React.ReactNode;
 }
 
-export default function CharacterCard(props: CharacterCardProps) {
-    const { name, gender, image, status, type, species, id } = props.character;
-    const router = useRouter();
-    const { page, name: queryName } = router.query;
+export default function CharacterCard({ character, children }: CharacterCardProps) {
+    const { name, image, status, id } = character;
     const { selectCharacter, unselectCharacter } = favoriteSlice.actions;
     const dispatch = useAppDispatch();
     const { selected } = useAppSelector((state) => state.favorite);
-
-    const isDetails = (() => {
-        return router.pathname.includes('/details/');
-    })();
 
     const isSelectedCharacter = useCallback(
         (id: number) => {
@@ -30,24 +26,18 @@ export default function CharacterCard(props: CharacterCardProps) {
 
     const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            dispatch(selectCharacter(props.character));
+            dispatch(selectCharacter(character));
         } else {
-            dispatch(unselectCharacter(props.character));
+            dispatch(unselectCharacter(character));
         }
     };
 
     return (
         <div
-            className={`${styles.card} ${status === 'Dead' ? styles.dead : ''} ${status === 'Alive' ? styles.alive : ''} ${isDetails ? '' : styles.cardActive}`}
+            className={`${styles.card} ${status === 'Dead' ? styles.dead : ''} ${status === 'Alive' ? styles.alive : ''}`}
         >
             <div className={styles.cardTitle}>{name}</div>
-            <Link
-                href={{
-                    pathname: `/character/details/${id}`,
-                    query: { page, queryName },
-                }}
-                as={`/character/details/${id}?page=${page}&name=${name}`}
-            >
+            <Link href={`/character/details/${id}`}>
                 <div className={styles.avatar}>
                     <img className={styles.image} src={image} alt={name}></img>
                 </div>
@@ -58,14 +48,7 @@ export default function CharacterCard(props: CharacterCardProps) {
                 onChange={handleCheck}
                 checked={isSelectedCharacter(id)}
             />
-            {isDetails && (
-                <>
-                    <div>Gender - {gender || '...'}</div>
-                    <div>Status - {status || '...'}</div>
-                    <div>Species - {species || '...'}</div>
-                    <div>Type - {type || '...'}</div>
-                </>
-            )}
+            {children}
         </div>
     );
 }

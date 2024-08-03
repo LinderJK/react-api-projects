@@ -1,18 +1,32 @@
+'use client';
 import styles from './styles.module.css';
 import CharacterCard from '../CharacterCard/CharacterCard.tsx';
-import { useRouter } from 'next/router';
 import { Character } from '../../types/Character.ts';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
 interface SideBarProps {
     dataDetails: Character;
 }
 export default function SideBar({ dataDetails }: SideBarProps) {
     const router = useRouter();
-    const { id } = router.query;
+    const handleMainClick = () => {
+        router.back();
+    };
 
-    if (!id) {
-        return <div className={styles.detailsContainer}>Invalid character ID</div>;
-    }
-
-    return <div className={styles.detailsContainer}>{dataDetails && <CharacterCard character={dataDetails} />}</div>;
+    return (
+        <div className={styles.details}>
+            {dataDetails && (
+                <CharacterCard character={dataDetails}>
+                    <>
+                        <div>Gender - {dataDetails.gender || '...'}</div>
+                        <div>Status - {dataDetails.status || '...'}</div>
+                        <div>Species - {dataDetails.species || '...'}</div>
+                        <div>Type - {dataDetails.type || '...'}</div>
+                    </>
+                </CharacterCard>
+            )}
+            <button onClick={handleMainClick}>Close</button>
+        </div>
+    );
 }
