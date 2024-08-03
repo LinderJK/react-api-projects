@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: './dist',
-  redirects: async () => {
+  async redirects () {
     return [
       {
         source: '/',
-        destination: '/character/?page=1',
-
+        destination: '/character',
         permanent: true,
       },
     ]
