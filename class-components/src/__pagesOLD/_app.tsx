@@ -1,5 +1,5 @@
-import '../styles/globals.css';
-import '../styles/theme.css';
+import '../app/globals.css';
+import '../app/theme.css';
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
 import { ThemeProvider } from '../context/ThemeContext.tsx';
