@@ -1,26 +1,33 @@
-import { ChangeEvent, useState } from 'react';
+'use client';
+import { ChangeEvent, useCallback, useState } from 'react';
 import styles from './SearchBar.module.css';
 import useLocalStorage from '../../hooks/useLocalStorage.ts';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function SearchBar() {
     const { query, setQuery } = useLocalStorage();
     const [inputValue, setInputValue] = useState(query ?? '');
     const [errorBoundary, setErrorBoundary] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value.trim());
     };
-    const handleSearch = () => {
-        setQuery(inputValue);
-        router.push({
-            pathname: '/character/',
-            query: {
-                page: 1,
-                name: inputValue,
-            },
-        });
-    };
+    const createQuery = useCallback(
+        (name: string) => {
+            setQuery(inputValue);
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('page', '1');
+            params.set('name', name);
+            return params.toString();
+        },
+        [searchParams, setQuery, inputValue],
+    );
+    const handleSearch = useCallback(() => {
+        const query = createQuery(inputValue);
+        router.push(`${pathname}?${query}`);
+    }, [createQuery, inputValue, pathname, router]);
 
     const handleError = () => {
         setErrorBoundary(!errorBoundary);
