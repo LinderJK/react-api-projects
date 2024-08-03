@@ -1,30 +1,35 @@
+'use client';
 import styles from './pagination.module.css';
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { useCallback } from 'react';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 const Pagination = ({ maxPages }: { maxPages: number }) => {
-    const router = useRouter();
-    const { query } = router;
-    const currentPage = parseInt(query.page as string, 10) || 1;
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const currentPage = Number(searchParams.get('page') ?? '1');
+    const createQueryString = useCallback(
+        (page: number) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('page', String(page));
 
-    const handleSetPage = (page: number) => {
-        const searchQuery = query.name ? `&name=${query.name}` : '';
-        router.push(`/character/?page=${page}${searchQuery}`);
-    };
+            return params.toString();
+        },
+        [searchParams],
+    );
 
     return (
         <React.Fragment>
             {maxPages > 0 && (
                 <div className={styles.pagination}>
-                    <button onClick={() => handleSetPage(currentPage - 1)} disabled={currentPage === 1}>
-                        Previous
-                    </button>
+                    <Link href={`${pathname}?${createQueryString(currentPage - 1)}`}>
+                        <button>Previous</button>
+                    </Link>
 
-                    <div>{`${currentPage} / ${maxPages}`}</div>
-
-                    <button onClick={() => handleSetPage(currentPage + 1)} disabled={currentPage === maxPages}>
-                        Next
-                    </button>
+                    <div>{`${currentPage ?? 1} / ${maxPages}`}</div>
+                    <Link href={`${pathname}?${createQueryString(currentPage + 1)}`}>
+                        <button>Next</button>
+                    </Link>
                 </div>
             )}
         </React.Fragment>
