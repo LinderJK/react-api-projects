@@ -2,7 +2,7 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import styles from './SearchBar.module.css';
 import useLocalStorage from '../../hooks/useLocalStorage.ts';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function SearchBar() {
     const { query, setQuery } = useLocalStorage();
@@ -10,7 +10,7 @@ export default function SearchBar() {
     const [errorBoundary, setErrorBoundary] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
-    const pathname = usePathname();
+    // const pathname = usePathname();
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value.trim());
     };
@@ -26,8 +26,8 @@ export default function SearchBar() {
     );
     const handleSearch = useCallback(() => {
         const query = createQuery(inputValue);
-        router.push(`${pathname}?${query}`);
-    }, [createQuery, inputValue, pathname, router]);
+        router.push(`/character?${query}`);
+    }, [createQuery, inputValue, router]);
 
     const handleError = () => {
         setErrorBoundary(!errorBoundary);
