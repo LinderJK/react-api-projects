@@ -1,3 +1,3 @@
-export default function TestPage() {
+export default function CharacterHomePage() {
     return null;
 }
