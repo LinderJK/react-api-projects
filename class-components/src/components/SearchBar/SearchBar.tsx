@@ -10,7 +10,7 @@ export default function SearchBar() {
     const [errorBoundary, setErrorBoundary] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
-    // const pathname = usePathname();
+
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value.trim());
     };
@@ -24,6 +24,7 @@ export default function SearchBar() {
         },
         [searchParams, setQuery, inputValue],
     );
+
     const handleSearch = useCallback(() => {
         const query = createQuery(inputValue);
         router.push(`/character?${query}`);
