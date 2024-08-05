@@ -21,7 +21,7 @@ export default function ResultBar({ data }: ResultBarProps) {
     };
 
     return (
-        <div onClick={handleClick}>
+        <div className={styles.container} onClick={handleClick}>
             <Pagination maxPages={data.info.pages}></Pagination>
             <div style={{ margin: '20px' }} className={styles.resultBar}>
                 {data && data.results ? (

@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .resultBar {
     display: flex;
     flex-direction: row;
