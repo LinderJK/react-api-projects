@@ -4,7 +4,7 @@ import type { RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { AppStore, RootState, setupStore } from './setupStore';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
-import { ThemeProvider } from '../../context/ThemeContext.tsx';
+import { ThemeProvider } from '../../context/ThemeProvider.tsx';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
     preloadedState?: Partial<RootState>;
