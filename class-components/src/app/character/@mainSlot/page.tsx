@@ -16,7 +16,6 @@ interface CharacterPageProps {
 }
 
 async function CharacterPage({ searchParams }: CharacterPageProps) {
-    // console.log(searchParams, params, 'MY PARAMS');
     const name = (searchParams?.name as string) ?? '';
     const page = (searchParams?.page as string) ?? '1';
     const data = await getCharacters(name, page);
