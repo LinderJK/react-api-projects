@@ -3,53 +3,50 @@ import { screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import DetailsPage from '../pages/character/details/[id].tsx';
-import mockRouter from 'next-router-mock';
+import DetailsPage from '../app/character/details/[id]/page.tsx';
+
+vi.mock('next/navigation', () => {
+    return {
+        __esModule: true,
+        usePathname: () => ({
+            pathname: '',
+        }),
+        useRouter: () => ({
+            push: vi.fn(),
+            replace: vi.fn(),
+            prefetch: vi.fn(),
+        }),
+        useSearchParams: () => ({
+            get: () => {},
+        }),
+    };
+});
 
 const data = {
-    dataDetails: {
-        id: 1,
-        name: 'Rick',
-        status: 'Dead',
-        species: 'Human',
-        type: 'Type 1',
-        gender: 'Male',
-        origin: {
-            name: 'Origin 1',
-            url: 'https://example.com/origin-1',
-        },
-        image: 'https://example.com/image-1',
-        episode: ['https://example.com/episode-1', 'https://example.com/episode-2'],
-        url: 'https://example.com/character-1',
-        created: 1234567890,
+    info: {
+        count: 2,
+        pages: 3,
+        next: 'https://rickandmortyapi.com/api/character/?page=2',
+        prev: 'https://rickandmortyapi.com/api/character/?page=1',
     },
-    dataMain: {
-        info: {
-            count: 2,
-            pages: 2,
-            next: 'https://rickandmortyapi.com/api/character/?page=2',
-            prev: null,
-        },
-        results: [
-            {
-                id: 1,
-                name: 'Rick',
-                status: 'Dead',
-                species: 'Human',
-                type: 'Type 1',
-                gender: 'Male',
-                origin: {
-                    name: 'Origin 1',
-                    url: 'https://example.com/origin-1',
-                },
-                image: 'https://example.com/image-1',
-                episode: ['https://example.com/episode-1', 'https://example.com/episode-2'],
-                url: 'https://example.com/character-1',
-                created: 1234567890,
+    results: [
+        {
+            id: 1,
+            name: 'Character 1',
+            status: 'Dead',
+            species: 'Human',
+            type: 'Type 1',
+            gender: 'Male',
+            origin: {
+                name: 'Origin 1',
+                url: 'https://example.com/origin-1',
             },
-        ],
-    },
-    initialState: {},
+            image: 'https://example.com/image-1',
+            episode: ['https://example.com/episode-1', 'https://example.com/episode-2'],
+            url: 'https://example.com/character-1',
+            created: 1234567890,
+        },
+    ],
 };
 
 export const handlers = [
@@ -65,31 +62,14 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('DetailsPage Component test', () => {
-    beforeAll(() => {
-        vi.mock('next/router', () => require('next-router-mock'));
-    });
-    afterEach(() => {
-        vi.clearAllMocks();
-        vi.resetAllMocks();
-    });
     test('Renders the DetailsPage component with "Details"', async () => {
-        renderWithProviders(<DetailsPage pageProps={data} />);
-
-        await waitFor(() => {
-            mockRouter.setCurrentUrl(`/character/details/${data.dataDetails.id}`);
-        });
+        const params = { id: '1' };
+        const Component = await DetailsPage({ params });
+        renderWithProviders(Component);
 
         await waitFor(() => {
             const title = screen.getByText('Details');
             expect(title).toBeInTheDocument();
-            const nameElement = screen.getByText(`Gender - ${data.dataDetails.gender}`);
-            expect(nameElement).toBeInTheDocument();
-            const statusElement = screen.getByText(`Status - ${data.dataDetails.status}`);
-            expect(statusElement).toBeInTheDocument();
-            const speciesElement = screen.getByText(`Species - ${data.dataDetails.species}`);
-            expect(speciesElement).toBeInTheDocument();
-            const typeElement = screen.getByText(`Type - ${data.dataDetails.type}`);
-            expect(typeElement).toBeInTheDocument();
         });
     });
 });

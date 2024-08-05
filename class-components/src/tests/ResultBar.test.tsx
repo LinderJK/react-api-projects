@@ -1,16 +1,34 @@
 import { screen, waitFor } from '@testing-library/react';
 import ResultBar from '../components/ResultBar/ResultBar';
 import { describe, expect, test } from 'vitest';
-import { http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
+
+vi.mock('next/navigation', () => {
+    return {
+        __esModule: true,
+        usePathname: () => ({
+            pathname: '',
+            includes: () => {
+                return false;
+            },
+        }),
+        useRouter: () => ({
+            push: vi.fn(),
+            replace: vi.fn(),
+            prefetch: vi.fn(),
+        }),
+        useSearchParams: () => ({
+            get: () => {},
+        }),
+    };
+});
 
 const data = {
     info: {
         count: 2,
-        pages: 2,
+        pages: 3,
         next: 'https://rickandmortyapi.com/api/character/?page=2',
-        prev: null,
+        prev: 'https://rickandmortyapi.com/api/character/?page=1',
     },
     results: [
         {
@@ -29,49 +47,17 @@ const data = {
             url: 'https://example.com/character-1',
             created: 1234567890,
         },
-        {
-            id: 2,
-            name: 'Character 2',
-            status: 'Alive',
-            species: 'Human',
-            type: 'Type 2',
-            gender: 'Female',
-            origin: {
-                name: 'Origin 2',
-                url: 'https://example.com/origin-2',
-            },
-            image: 'https://example.com/image-2',
-            episode: ['https://example.com/episode-2', 'https://example.com/episode-2'],
-            url: 'https://example.com/character-2',
-            created: 1234567890,
-        },
     ],
 };
 
-export const handlers = [
-    http.get('https://rickandmortyapi.com/api/character', ({ request }) => {
-        const url = new URL(request.url);
-        const name = url.searchParams.get('name');
-        const page = url.searchParams.get('page');
-        if (!name || !page) {
-            return new HttpResponse(null, { status: 404 });
-        }
-        if (name === 'Rick' && page === '1') {
-            return HttpResponse.json(data);
-        }
-        return new HttpResponse(null, { status: 404 });
-    }),
-];
-
-const server = setupServer(...handlers);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+afterEach(() => {
+    vi.clearAllMocks();
+    vi.resetAllMocks();
+});
 
 describe('ResultBar Component test', () => {
     test('Displays the specified number of cards', { retry: 2 }, async () => {
-        renderWithProviders(<ResultBar results={data.results} />);
+        renderWithProviders(<ResultBar data={data} />);
         await waitFor(() => {
             data.results.forEach((result) => {
                 expect(screen.getByText(result.name)).toBeInTheDocument();
@@ -85,7 +71,7 @@ describe('ResultBar Component test', () => {
     });
 
     test('Displays a message when there are no cards', async () => {
-        renderWithProviders(<ResultBar results={[]} />);
+        renderWithProviders(<ResultBar data={{ ...data, results: [] }} />);
         await waitFor(() => {
             expect(screen.getByText('No results found.')).toBeInTheDocument();
         });

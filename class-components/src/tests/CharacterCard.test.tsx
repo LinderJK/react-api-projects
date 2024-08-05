@@ -2,6 +2,22 @@ import { describe, expect, test } from 'vitest';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import CharacterCard from '../components/CharacterCard/CharacterCard';
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
+vi.mock('next/navigation', () => {
+    return {
+        __esModule: true,
+        usePathname: () => ({
+            pathname: '',
+        }),
+        useRouter: () => ({
+            push: vi.fn(),
+            replace: vi.fn(),
+            prefetch: vi.fn(),
+        }),
+        useSearchParams: () => ({
+            get: () => {},
+        }),
+    };
+});
 
 const data = {
     id: 1,
@@ -20,15 +36,11 @@ const data = {
     created: 1234567890,
 };
 
-beforeAll(() => {
-    vi.mock('next/router', () => require('next-router-mock'));
-});
-afterEach(() => {
-    vi.clearAllMocks();
-    vi.resetAllMocks();
-});
-
 describe('CharacterCard Component test', () => {
+    afterEach(() => {
+        vi.clearAllMocks();
+        vi.resetAllMocks();
+    });
     test('Preloaded state to render', () => {
         renderWithProviders(<CharacterCard character={data} />, {
             preloadedState: {

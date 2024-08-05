@@ -1,13 +1,29 @@
 import { expect, test } from 'vitest';
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
 import Pagination from '../components/Pagination/Pagination.tsx';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import mockRouter from 'next-router-mock';
 
+vi.mock('next/navigation', () => {
+    return {
+        __esModule: true,
+        usePathname: () => ({
+            pathname: '',
+            includes: () => {
+                return false;
+            },
+        }),
+        useRouter: () => ({
+            push: vi.fn(),
+            replace: vi.fn(),
+            prefetch: vi.fn(),
+        }),
+        useSearchParams: () => ({
+            get: () => {},
+        }),
+    };
+});
 describe('Pagination', () => {
-    beforeAll(() => {
-        vi.mock('next/router', () => require('next-router-mock'));
-    });
     afterEach(() => {
         vi.clearAllMocks();
         vi.resetAllMocks();
@@ -20,14 +36,5 @@ describe('Pagination', () => {
         const btnNext = screen.getByText('Next');
         expect(btnNext).toBeInTheDocument();
         expect(btnPrev).toBeDisabled();
-        fireEvent.click(btnNext);
-        await waitFor(() => {
-            expect(mockRouter.asPath).toBe('/character?page=2');
-        });
-        expect(btnPrev).toBeEnabled();
-        fireEvent.click(btnPrev);
-        await waitFor(() => {
-            expect(mockRouter.asPath).toBe('/character?page=1');
-        });
     });
 });

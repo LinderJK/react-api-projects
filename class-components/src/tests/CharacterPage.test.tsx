@@ -2,15 +2,31 @@ import { describe, expect } from 'vitest';
 import { renderWithProviders } from './testStore/renderWithProviders.tsx';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { downloadCSV } from '../utils/generateCSV.ts';
-import CharacterPage from '../pages/character';
+import ResultBar from '../components/ResultBar/ResultBar.tsx';
+import RootLayout from '../app/layout.tsx';
+
+vi.mock('next/navigation', () => ({
+    usePathname: vi.fn().mockReturnValue('/character/details/1'),
+    useRouter: vi.fn().mockReturnValue({
+        back: vi.fn(),
+    }),
+    useSearchParams: vi.fn(() => ({
+        get: vi.fn().mockImplementation((param) => {
+            if (param === 'name') return 'Rick';
+            if (param === 'page') return '1';
+            return null;
+        }),
+    })),
+}));
 
 vi.mock('../utils/generateCSV.ts');
+
 const data = {
     info: {
         count: 2,
-        pages: 2,
+        pages: 3,
         next: 'https://rickandmortyapi.com/api/character/?page=2',
-        prev: null,
+        prev: 'https://rickandmortyapi.com/api/character/?page=1',
     },
     results: [
         {
@@ -47,9 +63,14 @@ const data = {
         },
     ],
 };
+
 describe('SelectBar Component test', () => {
     test('Renders the SelectBar component', async () => {
-        renderWithProviders(<CharacterPage pageProps={{ data: data }} />);
+        renderWithProviders(
+            <RootLayout>
+                <ResultBar data={data} />
+            </RootLayout>,
+        );
         const pagination = screen.getByText(/Previous/i);
         expect(pagination).toBeInTheDocument();
 
@@ -72,13 +93,13 @@ describe('SelectBar Component test', () => {
         expect(downloadCSV).toHaveBeenCalled();
     });
 
-    test('Renders the SelectBar component', async () => {
-        renderWithProviders(<CharacterPage pageProps={{ data: data }} />);
-    });
-
     test('Checks the error'),
         () => {
-            renderWithProviders(<CharacterPage pageProps={{ data: data }} />);
+            renderWithProviders(
+                <RootLayout>
+                    <h1>Test children</h1>
+                </RootLayout>,
+            );
 
             const error = screen.getByText('Error!');
             const search = screen.getByPlaceholderText('Input Character Name');
