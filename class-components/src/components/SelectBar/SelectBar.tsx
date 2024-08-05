@@ -1,3 +1,4 @@
+'use client';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import styles from './SelectBar.module.css';
 import { unselectAllCharacter } from '../../store/reducers/FavoriteSlice.ts';
