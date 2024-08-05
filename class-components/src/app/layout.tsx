@@ -3,6 +3,7 @@ import './globals.css';
 import StoreProvider from './StoreProvider.tsx';
 import Header from '../components/Shared/Header.tsx';
 import { ThemeProvider } from '../context/ThemeProvider.tsx';
+import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
     title: 'Rick and Morty Characters',
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="en">
             <body>
