@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import React, { ChangeEvent, useCallback } from 'react';
 import { favoriteSlice } from '../../store/reducers/FavoriteSlice.ts';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface CharacterCardProps {
     character: Character;
@@ -24,6 +25,10 @@ export default function CharacterCard({ character, children }: CharacterCardProp
         [selected],
     );
 
+    const searchParams = useSearchParams();
+    const query = searchParams.get('name');
+    const page = searchParams.get('page');
+
     const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             dispatch(selectCharacter(character));
@@ -37,7 +42,7 @@ export default function CharacterCard({ character, children }: CharacterCardProp
             className={`${styles.card} ${status === 'Dead' ? styles.dead : ''} ${status === 'Alive' ? styles.alive : ''}`}
         >
             <div className={styles.cardTitle}>{name}</div>
-            <Link href={`/character/details/${id}`}>
+            <Link href={`/character/details/${id}?name=${query}&page=${page}`}>
                 <div className={styles.avatar}>
                     <img className={styles.image} src={image} alt={name}></img>
                 </div>
