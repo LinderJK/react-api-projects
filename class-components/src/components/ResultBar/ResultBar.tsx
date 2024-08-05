@@ -24,7 +24,7 @@ export default function ResultBar({ data }: ResultBarProps) {
         <div className={styles.container} onClick={handleClick}>
             <Pagination maxPages={data.info.pages}></Pagination>
             <div style={{ margin: '20px' }} className={styles.resultBar}>
-                {data && data.results ? (
+                {!!data && data.results.length > 0 ? (
                     data.results.map((data: Character) => (
                         <CharacterCard key={data.id} character={data}></CharacterCard>
                     ))
