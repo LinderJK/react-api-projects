@@ -26,8 +26,8 @@ export default function CharacterCard({ character, children }: CharacterCardProp
     );
 
     const searchParams = useSearchParams();
-    const query = searchParams.get('name');
-    const page = searchParams.get('page');
+    const query = searchParams.get('name') ?? '';
+    const page = searchParams.get('page') ?? '1';
 
     const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
