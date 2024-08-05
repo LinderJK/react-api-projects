@@ -4,7 +4,10 @@ const SEARCH_QUERY_KEY = 'searchQuery';
 
 export function useLocalStorage() {
     const [query, setQuery] = useState<string>(() => {
-        return localStorage.getItem(SEARCH_QUERY_KEY) || '';
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem(SEARCH_QUERY_KEY) || '';
+        }
+        return '';
     });
 
     useEffect(() => {
