@@ -1,7 +1,7 @@
 'use client';
 import CharacterCard from '../CharacterCard/CharacterCard.tsx';
 import styles from './ResultBar.module.css';
-import { Character } from '../../types/Character.ts';
+import { Character, CharacterResponse } from '../../types/Character.ts';
 import { usePathname, useRouter } from 'next/navigation';
 import Pagination from '../Pagination/Pagination.tsx';
 
