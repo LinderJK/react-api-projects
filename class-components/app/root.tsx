@@ -1,27 +1,56 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import ErrorBoundary from '../src/components/ErrorBoundary/ErrorBoundary';
 import { store } from '../src/store/store';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from '../src/context/ThemeContext';
+import Header from '../src/components/Shared/Header';
+import SelectBar from '../src/components/SelectBar/SelectBar';
+import './styles/global.css';
+import { ThemeProvider } from '../src/context/ThemeProvider';
+import { ReactNode } from 'react';
 
-export default function Root() {
+function Layout({ children }: { children: ReactNode }) {
     return (
-        <html lang="en">
+        <html>
             <head>
-                <Links />
                 <Meta />
+                <Links />
             </head>
             <body>
-                <ErrorBoundary fallback={<h1>Oh no, an error occurred!</h1>}>
-                    <Provider store={store}>
-                        <ThemeProvider>
-                            <Outlet />
-                        </ThemeProvider>
-                    </Provider>
-                </ErrorBoundary>
-                <ScrollRestoration />
+                {children}
                 <Scripts />
+                <ScrollRestoration />
             </body>
         </html>
+    );
+}
+export default function App() {
+    return (
+        <Layout>
+            <Provider store={store}>
+                <ThemeProvider>
+                    <Header></Header>
+                    <main className="main">
+                        <Outlet />
+                    </main>
+                    <SelectBar></SelectBar>
+                </ThemeProvider>
+            </Provider>
+        </Layout>
+    );
+}
+
+export function ErrorBoundary() {
+    return (
+        <Layout>
+            <h1>OH snap! Its TEST ERROR BOUNDARY</h1>
+            <button onClick={() => window.location.reload()}>Go to main?</button>
+        </Layout>
+    );
+}
+
+export function HydrateFallback() {
+    return (
+        <Layout>
+            <h1>Loading...</h1>
+        </Layout>
     );
 }
