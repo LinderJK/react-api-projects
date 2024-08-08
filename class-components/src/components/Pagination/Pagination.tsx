@@ -1,23 +1,31 @@
 import styles from './pagination.module.css';
-import { useAppSelector } from '../../hooks/redux.ts';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from '@remix-run/react';
+import { useLocation } from '@remix-run/react';
 
-const Pagination = () => {
-    const { currentPage, maxPages } = useAppSelector((state) => state.search);
-    const [, setSearchParams] = useSearchParams();
+interface PaginationProps {
+    currentPage: number;
+    maxPages: number;
+}
 
+const Pagination = ({ currentPage, maxPages }: PaginationProps) => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const handlePreviousPage = () => {
-        setSearchParams((prev) => {
-            prev.set('page', (currentPage - 1).toString());
-            return prev;
-        });
+        if (currentPage > 1) {
+            const newPage = currentPage - 1;
+            const searchParams = new URLSearchParams(location.search);
+            searchParams.set('page', newPage.toString());
+            navigate(`${location.pathname}?${searchParams.toString()}`);
+        }
     };
 
     const handleNextPage = () => {
-        setSearchParams((prev) => {
-            prev.set('page', (currentPage + 1).toString());
-            return prev;
-        });
+        if (currentPage < maxPages) {
+            const newPage = currentPage + 1;
+            const searchParams = new URLSearchParams(location.search);
+            searchParams.set('page', newPage.toString());
+            navigate(`${location.pathname}?${searchParams.toString()}`);
+        }
     };
 
     return (

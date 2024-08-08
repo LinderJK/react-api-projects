@@ -1,32 +1,32 @@
 import styles from './styles.module.css';
-import { useParams } from 'react-router-dom';
 import CharacterCard from '../CharacterCard/CharacterCard.tsx';
-import { useGetCharacterByIdQuery } from '../../services/CharacterService.ts';
-import { useAppDispatch } from '../../hooks/redux.ts';
-import { addDetailsItem } from '../../store/reducers/DetailsSlice.ts';
-import { useEffect } from 'react';
+import { Character } from '../../types/Character.ts';
+import { useLocation, useNavigate } from '@remix-run/react';
 
-export default function SideBar() {
-    const { id } = useParams();
-    const dispatch = useAppDispatch();
+interface SideBarProps {
+    dataDetails: Character;
+}
+export default function SideBar({ dataDetails }: SideBarProps) {
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const { data, error, isLoading } = useGetCharacterByIdQuery(id || '', {
-        skip: !id,
-    });
-
-    useEffect(() => {
-        dispatch(addDetailsItem(data));
-    }, [data, dispatch]);
-
-    if (!id) {
-        return <div className={styles.detailsContainer}>Invalid character ID</div>;
-    }
+    const handleMainClick = () => {
+        navigate(`/character/${location.search}`);
+    };
 
     return (
-        <div className={styles.detailsContainer}>
-            {error && <div>{error.toString()}</div>}
-            {isLoading && <div>Loading...</div>}
-            {data && <CharacterCard character={data} />}
+        <div className={styles.details}>
+            {dataDetails && (
+                <CharacterCard character={dataDetails}>
+                    <>
+                        <div>Gender - {dataDetails.gender || '...'}</div>
+                        <div>Status - {dataDetails.status || '...'}</div>
+                        <div>Species - {dataDetails.species || '...'}</div>
+                        <div>Type - {dataDetails.type || '...'}</div>
+                    </>
+                </CharacterCard>
+            )}
+            <button onClick={handleMainClick}>Close</button>
         </div>
     );
 }
