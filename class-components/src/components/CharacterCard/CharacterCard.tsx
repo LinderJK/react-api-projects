@@ -1,15 +1,18 @@
 import { Character } from '../../types/Character.ts';
 import styles from './CharacterCard.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
-import { ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { favoriteSlice } from '../../store/reducers/FavoriteSlice.ts';
+import { useNavigate } from '@remix-run/react';
+import { useLocation } from '@remix-run/react';
+
 interface CharacterCardProps {
     character: Character;
+    children?: React.ReactNode;
 }
 
-export default function CharacterCard(props: CharacterCardProps) {
-    const { name, gender, image, status, type, species, id } = props.character;
+export default function CharacterCard({ character, children }: CharacterCardProps) {
+    const { name, image, status, id } = character;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -19,11 +22,11 @@ export default function CharacterCard(props: CharacterCardProps) {
     const { selected } = useAppSelector((state) => state.favorite);
 
     const isDetails = (() => {
-        return location.pathname.startsWith('/details/');
+        return location.pathname.includes('/details/');
     })();
 
     const handleClick = () => {
-        navigate(`/details/${id}${location.search}`);
+        navigate(`/character/details/${id}${location.search}`);
     };
 
     const isSelectedCharacter = useCallback(
@@ -35,9 +38,9 @@ export default function CharacterCard(props: CharacterCardProps) {
 
     const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            dispatch(selectCharacter(props.character));
+            dispatch(selectCharacter(character));
         } else {
-            dispatch(unselectCharacter(props.character));
+            dispatch(unselectCharacter(character));
         }
     };
 
@@ -55,14 +58,7 @@ export default function CharacterCard(props: CharacterCardProps) {
                 onChange={handleCheck}
                 checked={isSelectedCharacter(id)}
             />
-            {isDetails && (
-                <>
-                    <div>Gender - {gender || '...'}</div>
-                    <div>Status - {status || '...'}</div>
-                    <div>Species - {species || '...'}</div>
-                    <div>Type - {type || '...'}</div>
-                </>
-            )}
+            {children}
         </div>
     );
 }
