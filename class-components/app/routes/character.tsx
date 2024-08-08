@@ -41,9 +41,7 @@ export default function CharacterPage() {
     if (error) {
         return <h1>{error}</h1>;
     }
-    if (!data) {
-        return <h1>Loading...</h1>;
-    }
+
     return (
         <div className={styles.container}>
             <section className={styles.characterSection}>
