@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { AppStore, RootState, setupStore } from './setupStore';
-import { ThemeProvider } from '../../context/ThemeContext.tsx';
+import { ThemeProvider } from '../../context/ThemeProvider.tsx';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
     preloadedState?: Partial<RootState>;
