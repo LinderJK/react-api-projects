@@ -1,0 +1,26 @@
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.titleBar {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.titleBar:hover {
+  cursor: pointer;
+}
+
+.logoPortal {
+    width: 100px;
+    height: 100px;
+    animation: rotate 5s linear infinite;
+}
