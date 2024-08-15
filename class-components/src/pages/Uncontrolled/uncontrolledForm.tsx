@@ -1,6 +1,8 @@
 import styles from './style.module.css';
 import Input from '../../components/Input.tsx';
 import InputProps from '../../types/input.ts';
+import { boolean, number, object, ref, string } from 'yup';
+import { FormEvent } from 'react';
 
 const inputs: InputProps[] = [
     { name: 'name', type: 'text', label: 'Name', placeholder: 'Name', value: '' },
@@ -14,13 +16,43 @@ const inputs: InputProps[] = [
     { name: 'agree', type: 'checkbox', label: 'Agree', placeholder: 'Agree' },
 ];
 
-// const userSchema = object({
-//     name: string().required(),
-//     age: number().required().positive().integer(),
-//     email: string().email(),
-//     website: string().url().nullable(),
-//     createdOn: date().default(() => new Date()),
-// });
+const userSchema = object({
+    name: string()
+        .required('Name is required')
+        .matches(/^[A-Z]/, 'Name must start with an uppercase letter'),
+    age: number()
+        .required('Age is required')
+        .positive('Age must be a positive number')
+        .integer('Age must be a integer number'),
+    email: string().required().email('Email is required'),
+    password: string()
+        .required()
+        .matches(/^[A-Z]/, 'Password must start with an uppercase letter')
+        .matches(/[0-9]/, 'Password must contain a number')
+        .matches(/[a-z]/, 'Password must contain a lowercase letter')
+        .matches(/[!@#$%^&*]/, 'Password must contain a special character'),
+    confirmPassword: string()
+        .required()
+        .oneOf([ref('password')], 'Passwords must match'),
+    gender: string().required().oneOf(['male', 'female'], 'Gender is required'),
+    country: string().required(),
+    image: string(),
+    agree: boolean().required().oneOf([true], 'You must agree to the terms and conditions'),
+});
+
+const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    userSchema
+        .validate(event.currentTarget.form, { abortEarly: false })
+        .then((values) => {
+            console.log(values);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    // event.currentTarget.form.reset();
+};
 
 export default function UncontrolledForm() {
     return (
@@ -28,7 +60,7 @@ export default function UncontrolledForm() {
             <h1>Uncontrolled Forms</h1>
             <div>
                 <div className={styles.container}>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={handleSubmit}>
                         {inputs.map((input) => (
                             <Input key={input.name} {...input} />
                         ))}
