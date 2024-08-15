@@ -1,8 +1,8 @@
 import './App.css';
 import MainPage from './pages/mainPage.tsx';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import ControlledForm from './pages/controlledForm.tsx';
-import UncontrolledForm from './pages/uncontrolledForm.tsx';
+import ControlledForm from './pages/Controlled/controlledForm.tsx';
+import UncontrolledForm from './pages/Uncontrolled/uncontrolledForm.tsx';
 import NotFound from './pages/NotFoundPage.tsx';
 
 function App() {
