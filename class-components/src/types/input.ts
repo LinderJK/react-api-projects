@@ -16,12 +16,18 @@ export type CheckboxInputProps = BaseInputProps & {
     checked?: boolean;
 };
 
+export type SelectInputProps = BaseInputProps & {
+    type: 'select';
+    value: string;
+    options: string[];
+};
+
 export type FileInputProps = BaseInputProps & {
     type: 'file';
     value?: undefined;
     accept?: string;
 };
 
-type InputProps = TextInputProps | CheckboxInputProps | FileInputProps;
+type InputProps = TextInputProps | CheckboxInputProps | FileInputProps | SelectInputProps;
 
 export default InputProps;
