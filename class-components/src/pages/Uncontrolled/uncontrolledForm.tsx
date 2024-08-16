@@ -1,8 +1,8 @@
 import styles from './style.module.css';
 import Input from '../../components/Input.tsx';
 import InputProps from '../../types/input.ts';
-import { boolean, number, object, ref, string } from 'yup';
-import { FormEvent } from 'react';
+import { boolean, number, object, ref, string, ValidationError } from 'yup';
+import { FormEvent, useState } from 'react';
 
 const inputs: InputProps[] = [
     { name: 'name', type: 'text', label: 'Name', placeholder: 'Name', value: '' },
@@ -10,7 +10,7 @@ const inputs: InputProps[] = [
     { name: 'email', type: 'email', label: 'Email', placeholder: 'Email', value: '' },
     { name: 'password', type: 'password', label: 'Password', placeholder: 'Password', value: '' },
     { name: 'confirmPassword', type: 'password', label: '', placeholder: 'Confirm Password', value: '' },
-    { name: 'gender', type: 'text', label: 'Gender', placeholder: 'Gender', value: '' },
+    { name: 'gender', type: 'select', label: 'Gender', placeholder: 'Gender', value: '', options: ['Female', 'Male'] },
     { name: 'country', type: 'text', label: 'Country', placeholder: 'Country', value: '' },
     { name: 'image', type: 'file', label: 'Image', placeholder: 'Image' },
     { name: 'agree', type: 'checkbox', label: 'Agree', placeholder: 'Agree' },
@@ -21,6 +21,7 @@ const userSchema = object({
         .required('Name is required')
         .matches(/^[A-Z]/, 'Name must start with an uppercase letter'),
     age: number()
+        .transform((value, originalValue) => (String(originalValue).trim() === '' ? null : value))
         .required('Age is required')
         .positive('Age must be a positive number')
         .integer('Age must be a integer number'),
@@ -34,27 +35,42 @@ const userSchema = object({
     confirmPassword: string()
         .required()
         .oneOf([ref('password')], 'Passwords must match'),
-    gender: string().required().oneOf(['male', 'female'], 'Gender is required'),
+    gender: string().required().oneOf(['Female', 'Male'], 'Gender is required'),
     country: string().required(),
     image: string(),
     agree: boolean().required().oneOf([true], 'You must agree to the terms and conditions'),
 });
 
-const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    userSchema
-        .validate(event.currentTarget.form, { abortEarly: false })
-        .then((values) => {
-            console.log(values);
-        })
-        .catch((error) => {
-            console.log(error);
+export default function UncontrolledForm() {
+    const [errorsMessage, setErrorMessage] = useState<{ [key: string]: string } | null>(null);
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+
+        inputs.forEach((input) => {
+            if (input.type === 'checkbox') {
+                data[input.name] = String(formData.has(input.name));
+            }
         });
 
-    // event.currentTarget.form.reset();
-};
+        console.log(data);
 
-export default function UncontrolledForm() {
+        try {
+            await userSchema.validate(data, { abortEarly: false });
+            setErrorMessage(null);
+        } catch (err) {
+            if (err instanceof ValidationError) {
+                const errors: { [key: string]: string } = {};
+                err.inner.forEach((error) => {
+                    errors[error.path!] = error.message;
+                });
+                setErrorMessage(errors);
+                console.log(errors);
+            }
+        }
+    };
     return (
         <div>
             <h1>Uncontrolled Forms</h1>
@@ -62,7 +78,7 @@ export default function UncontrolledForm() {
                 <div className={styles.container}>
                     <form className={styles.form} onSubmit={handleSubmit}>
                         {inputs.map((input) => (
-                            <Input key={input.name} {...input} />
+                            <Input {...input} error={errorsMessage?.[input.name] ?? undefined} key={input.name} />
                         ))}
                         <button type="submit">Submit form</button>
                     </form>
