@@ -1,6 +1,5 @@
 import styles from './styles.module.css';
-import InputProps, { CheckboxInputProps, SelectInputProps, TextInputProps } from '../types/input.ts';
-
+import InputProps, { AutoCompleteInputProps, SelectInputProps } from '../types/input.ts';
 export default function Input(props: InputProps & { error?: string }) {
     const { name, label, disabled = false, type, autocomplete = 'off', placeholder, error } = props;
 
@@ -14,12 +13,12 @@ export default function Input(props: InputProps & { error?: string }) {
         type: type,
     };
 
-    return (
-        <div className={styles.container}>
-            <label className={styles.myLabel} htmlFor={name}>
-                {label}
-            </label>
-            {inputProps.type === 'select' ? (
+    if (type === 'select') {
+        return (
+            <div className={styles.container}>
+                <label className={styles.myLabel} htmlFor={name}>
+                    {label}
+                </label>
                 <select {...inputProps}>
                     {(props as SelectInputProps).options.map((option) => (
                         <option key={option} value={option}>
@@ -27,19 +26,38 @@ export default function Input(props: InputProps & { error?: string }) {
                         </option>
                     ))}
                 </select>
-            ) : (
-                <input
-                    {...inputProps}
-                    {...(type === 'checkbox' ? { defaultChecked: (props as CheckboxInputProps).checked } : false)}
-                    {...(type !== 'file'
-                        ? { defaultValue: (props as TextInputProps).value }
-                        : {
-                              value: undefined,
-                              accept: 'image/*',
-                          })}
-                />
-            )}
+                <span className={styles.myError}>{error}</span>
+            </div>
+        );
+    }
 
+    if (type === 'autocomplete') {
+        return (
+            <div className={styles.container}>
+                <label className={styles.myLabel} htmlFor={name}>
+                    {label}
+                </label>
+                <input
+                    list={`${name}-options`}
+                    {...inputProps}
+                    defaultValue={(props as AutoCompleteInputProps).value}
+                />
+                <datalist id={`${name}-options`}>
+                    {(props as AutoCompleteInputProps).options.map((option) => (
+                        <option key={option} value={option} />
+                    ))}
+                </datalist>
+                <span className={styles.myError}>{error}</span>
+            </div>
+        );
+    }
+
+    return (
+        <div className={styles.container}>
+            <label className={styles.myLabel} htmlFor={name}>
+                {label}
+            </label>
+            <input {...inputProps} />
             <span className={styles.myError}>{error}</span>
         </div>
     );
