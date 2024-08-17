@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import InputProps, { AutoCompleteInputProps, SelectInputProps } from '../types/input.ts';
+import InputProps, { AutoCompleteInputProps, SelectInputProps } from '../../types/input.ts';
 export default function Input(props: InputProps & { error?: string }) {
     const { name, label, disabled = false, type, autocomplete = 'off', placeholder, error } = props;
 
