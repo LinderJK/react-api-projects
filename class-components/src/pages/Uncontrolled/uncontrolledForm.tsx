@@ -1,12 +1,13 @@
 import styles from './style.module.css';
-import Input from '../../components/Input.tsx';
+import Input from '../../components/CustomInput/Input.tsx';
 import InputProps from '../../types/input.ts';
 import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import { userSchema } from '../../utils/yupValidScheme.ts';
 import { ValidationError } from 'yup';
 import { setUncontrolledData } from '../../features/uncontrolledSlice.ts';
-import { aw } from 'vitest/dist/chunks/reporters.C_zwCd4j';
+import { convertToBase64 } from '../../utils/convertToBase64.ts';
+import { useNavigate } from 'react-router-dom';
 
 const inputs: InputProps[] = [
     { name: 'name', type: 'text', label: 'Name', placeholder: 'Name', value: '' },
@@ -37,6 +38,7 @@ export default function UncontrolledForm() {
     const country = useAppSelector((state) => state.country.country);
     const [errorsMessage, setErrorMessage] = useState<{ [key: string]: string } | null>(null);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const updatedInputs = inputs.map((input) => {
         if (input.name === 'country') {
@@ -60,39 +62,20 @@ export default function UncontrolledForm() {
             }
         });
 
-        console.log(data);
-        const convertImage = async (image: File) => {
-            let string = '';
-            if (image && image.size > 0) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    string = reader.result as string;
-
-                    // data['image'] = base64String;
-                    // console.log(base64String);
-                };
-                await reader.readAsDataURL(image);
-            }
-            return string;
-        };
-        // const imageFile = formData.get('image') as File;
-        // if (imageFile && imageFile.size > 0) {
-        //     const reader = new FileReader();
-        //     reader.onloadend = () => {
-        //         const base64String = reader.result as string;
-        //         data['image'] = base64String;
-        //         console.log(base64String);
-        //     };
-        //     reader.readAsDataURL(imageFile);
-        // }
-
         try {
             await userSchema.validate(data, { abortEarly: false });
             setErrorMessage(null);
+
             const imageFile = formData.get('image') as File;
-            const base = await convertImage(imageFile);
-            const newData = { ...data, image: base };
-            dispatch(setUncontrolledData(newData));
+            if (imageFile && imageFile.size > 0) {
+                const base64Image = await convertToBase64(imageFile);
+                data['image'] = base64Image as string;
+            } else {
+                data['image'] = '';
+            }
+            console.log(data);
+            dispatch(setUncontrolledData(data));
+            navigate('/');
         } catch (err) {
             if (err instanceof ValidationError) {
                 const errors: { [key: string]: string } = {};
