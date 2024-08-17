@@ -22,12 +22,18 @@ export type SelectInputProps = BaseInputProps & {
     options: string[];
 };
 
+export type AutoCompleteInputProps = BaseInputProps & {
+    type: 'autocomplete';
+    value: string;
+    options: string[];
+};
+
 export type FileInputProps = BaseInputProps & {
     type: 'file';
     value?: undefined;
     accept?: string;
 };
 
-type InputProps = TextInputProps | CheckboxInputProps | FileInputProps | SelectInputProps;
+type InputProps = TextInputProps | CheckboxInputProps | FileInputProps | SelectInputProps | AutoCompleteInputProps;
 
 export default InputProps;
