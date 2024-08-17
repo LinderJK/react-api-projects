@@ -34,3 +34,12 @@
   cursor: not-allowed;
   border-color: #555555;
 }
+
+.myError {
+  font-size: 10px;
+  color: #ff0000;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  content: ;
+}
