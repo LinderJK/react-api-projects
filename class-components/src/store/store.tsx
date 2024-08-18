@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import countrySlice from '../features/countrySlice.ts';
-import uncontrolledSlice from '../features/uncontrolledSlice.ts';
+import uncontrolledSlice from '../features/formsSlice.ts';
 
 export const store = configureStore({
     reducer: {
         country: countrySlice,
-        uncontrolled: uncontrolledSlice,
+        forms: uncontrolledSlice,
     },
 });
 

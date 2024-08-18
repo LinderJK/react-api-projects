@@ -1,16 +1,16 @@
 import { IFormData } from '../types/forms.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const uncontrolledSlice = createSlice({
+export const formsSlice = createSlice({
     name: 'uncontrolled',
     initialState: [] as IFormData[],
     reducers: {
-        setUncontrolledData: (state: IFormData[], action: PayloadAction<IFormData>) => {
+        setFormData: (state: IFormData[], action: PayloadAction<IFormData>) => {
             state.push(action.payload);
         },
     },
 });
 
-export const { setUncontrolledData } = uncontrolledSlice.actions;
+export const { setFormData } = formsSlice.actions;
 
-export default uncontrolledSlice.reducer;
+export default formsSlice.reducer;
