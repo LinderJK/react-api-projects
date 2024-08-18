@@ -4,6 +4,7 @@ export type BaseInputProps = {
     placeholder: string;
     autocomplete?: 'off' | 'on';
     disabled?: boolean;
+    error?: string;
 };
 
 export type TextInputProps = BaseInputProps & {
@@ -34,6 +35,9 @@ export type FileInputProps = BaseInputProps & {
     accept?: string;
 };
 
-type InputProps = TextInputProps | CheckboxInputProps | FileInputProps | SelectInputProps | AutoCompleteInputProps;
-
-export default InputProps;
+export type InputProps =
+    | TextInputProps
+    | CheckboxInputProps
+    | FileInputProps
+    | SelectInputProps
+    | AutoCompleteInputProps;
