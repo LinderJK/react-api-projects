@@ -9,7 +9,7 @@
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "format:fix": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
-    "prepare": "husky",
+    "prepare": "cd .. && husky class-components/.husky",
     "preview": "vite preview"
   },
   "dependencies": {
