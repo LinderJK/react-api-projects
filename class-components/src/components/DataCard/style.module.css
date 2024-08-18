@@ -1,0 +1,47 @@
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+}
+
+.cardTitle {
+    color: #b3b3b3;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cardValue {
+    color: lawngreen;
+}
+
+.imgContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.image {
+    width: 300px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.lastCard {
+    background: linear-gradient(
+        65deg,
+        rgba(104, 59, 172, 1) 0%,
+        rgba(51, 33, 98, 1) 50%,
+        rgba(64, 21, 107, 1) 100%
+    );
+    border: 3px solid rebeccapurple;
+}
