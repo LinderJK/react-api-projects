@@ -1,42 +1,20 @@
-import styles from './style.module.css';
+import styles from '../style.module.css';
 import Input from '../../components/CustomInput/Input.tsx';
-import InputProps from '../../types/input.ts';
 import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import { userSchema } from '../../utils/yupValidScheme.ts';
 import { ValidationError } from 'yup';
-import { setUncontrolledData } from '../../features/uncontrolledSlice.ts';
+import { setFormData } from '../../features/formsSlice.ts';
 import { convertToBase64 } from '../../utils/convertToBase64.ts';
 import { useNavigate } from 'react-router-dom';
-
-const inputs: InputProps[] = [
-    { name: 'name', type: 'text', label: 'Name', placeholder: 'Name', value: '' },
-    { name: 'age', type: 'number', label: 'Age', placeholder: 'Age', value: '' },
-    { name: 'email', type: 'email', label: 'Email', placeholder: 'Email', value: '' },
-    { name: 'password', type: 'password', label: 'Password', placeholder: 'Password', value: '' },
-    {
-        name: 'confirmPassword',
-        type: 'password',
-        label: 'Confirm Password',
-        placeholder: 'Confirm Password',
-        value: '',
-    },
-    { name: 'gender', type: 'select', label: 'Gender', placeholder: 'Gender', value: '', options: ['Female', 'Male'] },
-    {
-        name: 'country',
-        type: 'autocomplete',
-        label: 'Country',
-        placeholder: 'Country',
-        value: '',
-        options: [],
-    },
-    { name: 'image', type: 'file', label: 'Image', placeholder: 'Image' },
-    { name: 'agree', type: 'checkbox', label: 'Terms and Conditions agreement', placeholder: 'Agree' },
-];
+import { inputs } from '../../utils/formsData.ts';
+import { IFormData } from '../../types/forms.ts';
 
 export default function UncontrolledForm() {
     const country = useAppSelector((state) => state.country.country);
-    const [errorsMessage, setErrorMessage] = useState<{ [key: string]: string } | null>(null);
+    const [errorsMessage, setErrorMessage] = useState<{
+        [key: string]: string;
+    } | null>(null);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -73,8 +51,7 @@ export default function UncontrolledForm() {
             } else {
                 data['image'] = '';
             }
-            console.log(data);
-            dispatch(setUncontrolledData(data));
+            dispatch(setFormData(data as IFormData));
             navigate('/');
         } catch (err) {
             if (err instanceof ValidationError) {
@@ -83,7 +60,6 @@ export default function UncontrolledForm() {
                     errors[error.path!] = error.message;
                 });
                 setErrorMessage(errors);
-                console.log(errors);
             }
         }
     };
@@ -95,7 +71,11 @@ export default function UncontrolledForm() {
                 <div className={styles.container}>
                     <form className={styles.form} onSubmit={handleSubmit}>
                         {updatedInputs.map((input) => (
-                            <Input {...input} error={errorsMessage?.[input.name] ?? undefined} key={input.name} />
+                            <Input
+                                {...input}
+                                error={errorsMessage?.[input.name] ?? undefined}
+                                key={input.name}
+                            />
                         ))}
                         <button type="submit">Submit form</button>
                     </form>
