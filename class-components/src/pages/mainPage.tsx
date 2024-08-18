@@ -7,7 +7,7 @@ export default function MainPage() {
             <h1>Forms</h1>
             <div>
                 <Link to={`controlled`}>
-                    <button>Controlled Forms</button>{' '}
+                    <button>React Hook Form</button>{' '}
                 </Link>
                 <Link to={`uncontrolled`}>
                     <button>Uncontrolled Forms</button>

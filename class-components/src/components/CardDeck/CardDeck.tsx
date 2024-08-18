@@ -7,16 +7,20 @@ export default function CardDeck() {
     const isLastItem = (index: number) => index === data.length - 1;
     return (
         <div className={styles.cardDeck}>
-            {data.map((item, index) => {
-                const lastItem = isLastItem(index);
-                return (
-                    <DataCard
-                        {...item}
-                        key={item.name as string}
-                        isLastItem={lastItem}
-                    />
-                );
-            })}
+            {!!data && data.length > 0 ? (
+                data.map((item, index) => {
+                    const lastItem = isLastItem(index);
+                    return (
+                        <DataCard
+                            {...item}
+                            key={item.email as string}
+                            isLastItem={lastItem}
+                        />
+                    );
+                })
+            ) : (
+                <p>No submitted form yet</p>
+            )}
         </div>
     );
 }
