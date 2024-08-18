@@ -1,7 +1,20 @@
 import styles from './styles.module.css';
-import InputProps, { AutoCompleteInputProps, SelectInputProps } from '../../types/input.ts';
-export default function Input(props: InputProps & { error?: string }) {
-    const { name, label, disabled = false, type, autocomplete = 'off', placeholder, error } = props;
+import { AutoCompleteInputProps, SelectInputProps } from '../../types/input.ts';
+import { InputPropsWithRegister } from '../../types/forms.ts';
+
+export default function Input(props: InputPropsWithRegister) {
+    const {
+        name,
+        label,
+        disabled = false,
+        type,
+        autocomplete = 'off',
+        placeholder,
+        error,
+        register,
+    } = props;
+
+    const registerProps = register ? register(name) : {};
 
     const inputProps = {
         name,
@@ -11,6 +24,7 @@ export default function Input(props: InputProps & { error?: string }) {
         id: name,
         className: styles.myInput,
         type: type,
+        ...registerProps,
     };
 
     if (type === 'select') {
