@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import UncontrolledCardDeck from '../components/UncontrolledCardDeck/UncontrolledCardDeck.tsx';
+import CardDeck from '../components/CardDeck/CardDeck.tsx';
 
 export default function MainPage() {
     return (
@@ -13,7 +13,7 @@ export default function MainPage() {
                     <button>Uncontrolled Forms</button>
                 </Link>
             </div>
-            <UncontrolledCardDeck />
+            <CardDeck />
         </div>
     );
 }
