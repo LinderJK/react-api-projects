@@ -9,11 +9,15 @@ export const userSchema = object({
         .required('Name is required')
         .matches(/^[A-Z]/, 'Name must start with an uppercase letter'),
     age: number()
-        .transform((value, originalValue) => (String(originalValue).trim() === '' ? null : value))
+        .transform((value, originalValue) =>
+            String(originalValue).trim() === '' ? null : value,
+        )
         .required('Age is required')
         .positive('Age must be a positive number')
         .integer('Age must be a integer number'),
-    email: string().required().email('Email is required'),
+    email: string()
+        .required('Email is required')
+        .email('Must be a valid email address with @'),
     password: string()
         .required()
         .matches(/^[A-Z]/, 'Password must start with an uppercase letter')
@@ -25,7 +29,7 @@ export const userSchema = object({
         .oneOf([ref('password')], 'Passwords must match'),
     gender: string().required().oneOf(['Female', 'Male'], 'Gender is required'),
     country: string().required(),
-    image: Yup.mixed()
+    image: Yup.mixed<File>()
         .required()
         .test('image must be added', 'Image is required', (value) => {
             if (value instanceof File) {
@@ -45,5 +49,7 @@ export const userSchema = object({
             }
             return true;
         }),
-    agree: boolean().required().oneOf([true], 'You must agree to the terms and conditions'),
+    agree: boolean()
+        .required()
+        .oneOf([true], 'You must agree to the terms and conditions'),
 });
