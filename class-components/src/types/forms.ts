@@ -1,11 +1,11 @@
+import { UseFormRegister } from 'react-hook-form';
+import { InputProps } from './input.ts';
+
 export interface IFormData {
-    name: string;
-    age: number;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    gender: ['male', 'female'];
-    agree: boolean;
-    image: File | string | null;
-    country: string;
+    [key: string]: string | number | boolean | File | undefined;
 }
+
+export type InputPropsWithRegister = InputProps & {
+    error?: string;
+    register?: UseFormRegister<IFormData>;
+};
