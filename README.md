@@ -1,8 +1,6 @@
 
 # React Query Demo
 
-> Description
-
 ## Project Timeline
 
 - **Start Date:** `2024-07-02`
